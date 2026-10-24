@@ -59,11 +59,14 @@ app.post('/api/chat', async (req, res) => {
     return res.status(400).json({ error: 'Message cannot be empty' });
   }
 
+  const hasBanglaText = /[\u0980-\u09FF]/.test(message);
+  const isBangla = language === 'bangla' || hasBanglaText;
+
   let langInstruction = 'Provide a structured response with clear English points accompanied by helpful Bangla explanations.';
-  if (language === 'bangla') {
-    langInstruction = 'STRICT LANGUAGE REQUIREMENT: You MUST respond completely in natural, conversational Bangla (বাংলায় সম্পূর্ণ উত্তর দিন). Translate and explain all concepts clearly in Bengali.';
+  if (isBangla) {
+    langInstruction = 'CRITICAL MANDATORY INSTRUCTION: You MUST write your entire response strictly in BENGALI (বাংলা ভাষায়). Do not output English text. Every sentence, bullet point, heading, and explanation MUST be in natural, fluent Bangla (সম্পূর্ণ উত্তর বাংলায় লিখুন)।';
   } else if (language === 'english') {
-    langInstruction = 'STRICT LANGUAGE REQUIREMENT: You MUST respond completely in clear, professional English.';
+    langInstruction = 'CRITICAL MANDATORY INSTRUCTION: You MUST write your entire response strictly in clear English.';
   }
 
   const systemPrompt = `${getSystemPrompt(category)}\n\n${langInstruction}`;

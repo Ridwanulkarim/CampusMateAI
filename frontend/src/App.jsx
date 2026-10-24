@@ -60,6 +60,10 @@ const TABS = [
 const PRESETS = {
   bus: [
     {
+      title: '🇧🇩 বাংলায় বাসের সময়সূচী',
+      text: 'IIUC কুমিরা ক্যাম্পাসে ফিমেল এবং মেল স্টুডেন্টদের সকালের ও বিকেলের বাসের সঠিক সময়সূচী এবং কোন গেট দিয়ে বাস ছাড়ে বাংলায় বিস্তারিত জানাও।',
+    },
+    {
       title: '🧕 Female Bus Schedule (3:00 PM Return)',
       text: 'Female students classes at IIUC end at 3:00 PM. What are the exact morning departures and 3:00 PM afternoon return bus schedules from Kumira Gate 2?',
     },
@@ -69,6 +73,10 @@ const PRESETS = {
     },
   ],
   study: [
+    {
+      title: '🇧🇩 বাংলায় লেকচার নোটস ও কুইজ',
+      text: 'অপারেটিং সিস্টেমের ডেডলক (Deadlock) এর ৪টি শর্ত বাস্তব জীবনের উদাহরণ দিয়ে সহজ বাংলায় বুঝিয়ে দাও এবং আমার পরীক্ষার জন্য ৩টি প্র্যাকটিস কুইজ তৈরি করো।',
+    },
     {
       title: '🇧🇩 English to Bangla Lecture Explainer',
       text: 'Translate and explain this English engineering lecture on Operating System Deadlocks into simple conversational Bangla with real-world examples: "A deadlock happens when multiple processes are blocked because each is holding a resource and waiting for another resource held by another process."',
