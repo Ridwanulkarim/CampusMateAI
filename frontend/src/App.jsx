@@ -100,11 +100,19 @@ export default function App() {
         }),
       });
 
-      const data = await res.json();
-
       if (!res.ok) {
-        throw new Error(data.error || 'Server error occurred');
+        let errText = `Server error (${res.status})`;
+        try {
+          const errData = await res.json();
+          errText = errData.error || errText;
+        } catch (_) {
+          const text = await res.text();
+          if (text) errText = text;
+        }
+        throw new Error(errText);
       }
+
+      const data = await res.json();
 
       setResponse(data.reply);
       setProvider(data.provider || 'Gemma 4');
