@@ -1,0 +1,19 @@
+{
+  "name": "campusmate-ai",
+  "version": "1.0.0",
+  "description": "CampusMate AI — Intelligent Campus & Study Assistant for IIUC Students powered by Gemma 4",
+  "scripts": {
+    "server": "cd backend && npm start",
+    "client": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build"
+  },
+  "keywords": [
+    "hacktoberfest",
+    "gemma4",
+    "iiuc",
+    "open-source-ai",
+    "campus-assistant"
+  ],
+  "author": "Ridwanul Karim",
+  "license": "MIT"
+}
