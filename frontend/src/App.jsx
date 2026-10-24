@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   Bus, 
   BookOpen, 
@@ -15,7 +15,10 @@ import {
   Search, 
   SlidersHorizontal,
   ArrowUpRight,
-  Clock
+  Clock,
+  FileText,
+  Image,
+  Loader2
 } from 'lucide-react';
 
 const TABS = [
@@ -77,7 +80,7 @@ const PRESETS = {
     },
     {
       title: '💻 CSE: Binary Search Tree (BST) Notes',
-      text: 'Here are my lecture notes on Binary Search Trees (BST): A BST is a binary tree where left child < parent and right child > parent. Search time is O(h) where h is height, O(log n) if balanced, but degrades to O(n) in worst case (skewed tree). In-order traversal produces sorted elements. Please give me: 1. Core summary, 2. Clear explanation with real-world examples, 3. Three practice MCQ exam questions with answers.',
+      text: 'Here are my lecture notes on Binary Search Trees (BST): A BST is a binary tree where left child < parent and right child > parent. Search time is O(h) where h is height, O(log n) if balanced, but degrades to O(n) in worst case (skewed tree). In-order traversal produces sorted elements. Please give me: 1. Core summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.',
     },
     {
       title: '📖 Islamic Studies: Maqasid al-Shariah',
@@ -129,6 +132,61 @@ export default function App() {
   const [copied, setCopied] = useState(false);
   const [playingVoice, setPlayingVoice] = useState(false);
   const [error, setError] = useState('');
+  const [uploadingFile, setUploadingFile] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState(null);
+
+  const pdfInputRef = useRef(null);
+  const imageInputRef = useRef(null);
+
+  const handleFileUpload = async (e, type) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingFile(true);
+    setError('');
+
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const base64 = reader.result;
+        const res = await fetch('/api/extract-file', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            base64,
+            fileType: type,
+            fileName: file.name,
+          }),
+        });
+
+        if (!res.ok) {
+          const errData = await res.json();
+          throw new Error(errData.error || 'Failed to extract text from file');
+        }
+
+        const data = await res.json();
+        setUploadedFile({
+          name: file.name,
+          type: type,
+          pages: data.pages,
+        });
+
+        const promptText = `Here are my lecture notes from "${file.name}":\n\n${data.text || 'Document content attached.'}\n\nPlease provide: 1. Core summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.`;
+        setInput(promptText);
+      } catch (err) {
+        console.error(err);
+        setError('Error uploading file: ' + err.message);
+      } finally {
+        setUploadingFile(false);
+        e.target.value = '';
+      }
+    };
+    reader.onerror = () => {
+      setError('Failed to read file from computer');
+      setUploadingFile(false);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSpeak = async () => {
     if (!response || playingVoice) return;
@@ -157,8 +215,8 @@ export default function App() {
       window.speechSynthesis.cancel();
       const cleanText = response.replace(/[*#_`]/g, '').slice(0, 350);
       const utterance = new SpeechSynthesisUtterance(cleanText);
-      utterance.rate = 1.0;
-      utterance.pitch = voiceGender === 'female' ? 1.2 : 0.82;
+      utterance.rate = 1.02;
+      utterance.pitch = 1.0;
 
       const voices = window.speechSynthesis.getVoices();
       if (isBanglaText) {
@@ -169,10 +227,10 @@ export default function App() {
         utterance.lang = 'en-US';
         const enVoices = voices.filter(v => v.lang.startsWith('en'));
         if (voiceGender === 'female') {
-          const femaleVoice = enVoices.find(v => /female|woman|samantha|victoria|karen|zira/i.test(v.name));
+          const femaleVoice = enVoices.find(v => /samantha|ava|karen|siri|zoe|serena|fiona|victoria|google us english/i.test(v.name)) || enVoices.find(v => /female|woman/i.test(v.name)) || enVoices[0];
           if (femaleVoice) utterance.voice = femaleVoice;
         } else {
-          const maleVoice = enVoices.find(v => /male|man|alex|daniel|fred|david/i.test(v.name));
+          const maleVoice = enVoices.find(v => /alex|daniel|tom|oliver|david|fred/i.test(v.name)) || enVoices.find(v => /male|man/i.test(v.name)) || enVoices[0];
           if (maleVoice) utterance.voice = maleVoice;
         }
       }
@@ -193,6 +251,7 @@ export default function App() {
     setInput('');
     setResponse('');
     setError('');
+    setUploadedFile(null);
   };
 
   const handleCopy = () => {
@@ -472,10 +531,67 @@ export default function App() {
                   ))}
                 </div>
 
+                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                  <input
+                    type="file"
+                    ref={pdfInputRef}
+                    accept="application/pdf"
+                    onChange={(e) => handleFileUpload(e, 'pdf')}
+                    className="hidden"
+                  />
+                  <input
+                    type="file"
+                    ref={imageInputRef}
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e, 'image')}
+                    className="hidden"
+                  />
+
+                  <button
+                    type="button"
+                    disabled={uploadingFile}
+                    onClick={() => pdfInputRef.current?.click()}
+                    className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2 py-1 rounded-lg transition-colors shadow-2xs"
+                  >
+                    <FileText className="w-3 h-3 text-red-500" />
+                    <span>Upload PDF</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={uploadingFile}
+                    onClick={() => imageInputRef.current?.click()}
+                    className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2 py-1 rounded-lg transition-colors shadow-2xs"
+                  >
+                    <Image className="w-3 h-3 text-blue-500" />
+                    <span>Upload Image</span>
+                  </button>
+
+                  {uploadingFile && (
+                    <span className="flex items-center gap-1 text-[10px] text-[#3c7bed] font-bold animate-pulse">
+                      <Loader2 className="w-3 h-3 animate-spin" />
+                      <span>Extracting text...</span>
+                    </span>
+                  )}
+
+                  {uploadedFile && (
+                    <span className="flex items-center gap-1 text-[10px] bg-blue-50 text-[#3c7bed] border border-blue-200 px-2 py-0.5 rounded-md font-semibold">
+                      <span>📄 {uploadedFile.name}</span>
+                      <button
+                        type="button"
+                        onClick={() => setUploadedFile(null)}
+                        className="hover:text-red-600 ml-1 font-bold"
+                      >
+                        ×
+                      </button>
+                    </span>
+                  )}
+                </div>
+
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask any campus question or select a preset above..."
+                  placeholder="Ask any campus question, click a preset, or upload PDF slides / notes photo..."
                   rows={3}
                   className="w-full bg-[#f8faff] border border-slate-200/90 rounded-xl p-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#3c7bed] focus:ring-2 focus:ring-[#3c7bed]/15 transition-all font-sans leading-relaxed"
                 />
@@ -590,7 +706,7 @@ export default function App() {
                     <span className="text-xs text-slate-700 font-bold">Synthesizing instant response...</span>
                   </div>
                 ) : response ? (
-                  <div className="flex-1 overflow-y-auto max-h-[300px] text-xs text-slate-800 leading-relaxed whitespace-pre-wrap font-sans bg-[#f8faff] p-3 rounded-xl border border-slate-200/80 select-text">
+                  <div className="flex-1 overflow-y-auto max-h-[350px] text-xs text-slate-800 leading-relaxed whitespace-pre-wrap font-sans bg-[#f8faff] p-3 rounded-xl border border-slate-200/80 select-text">
                     {response}
                   </div>
                 ) : (
@@ -599,7 +715,7 @@ export default function App() {
                       <Sparkles className="w-3.5 h-3.5" />
                     </div>
                     <p className="text-xs text-slate-500 max-w-xs">
-                      Pick a quick demo preset above or ask anything to see Gemma 4 synthesize answers.
+                      Pick a quick demo preset above, upload slides/notes, or ask anything to see Gemma 4 synthesize answers.
                     </p>
                   </div>
                 )}

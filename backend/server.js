@@ -6,7 +6,11 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+const pdfParse = require('pdf-parse');
+const Tesseract = require('tesseract.js');
 
 const PORT = process.env.PORT || 5001;
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434';
@@ -90,7 +94,7 @@ app.post('/api/chat', async (req, res) => {
             { role: 'user', content: message },
           ],
           temperature: 0.6,
-          max_tokens: 650,
+          max_tokens: 2500,
         }),
       });
 
@@ -116,7 +120,7 @@ app.post('/api/chat', async (req, res) => {
         prompt: prompt,
         stream: false,
         options: {
-          num_predict: 400,
+          num_predict: 2048,
         },
       }),
     });
@@ -136,6 +140,43 @@ app.post('/api/chat', async (req, res) => {
   return res.status(500).json({
     error: 'Failed to generate response. Please ensure Ollama or internet connection is active.',
   });
+});
+
+app.post('/api/extract-file', async (req, res) => {
+  const { base64, fileType, fileName } = req.body;
+  if (!base64) {
+    return res.status(400).json({ error: 'No file data received' });
+  }
+
+  try {
+    if (fileType === 'pdf' || (fileName && fileName.toLowerCase().endsWith('.pdf'))) {
+      const cleanBase64 = base64.replace(/^data:application\/pdf;base64,/, '');
+      const buffer = Buffer.from(cleanBase64, 'base64');
+      const pdfData = await pdfParse(buffer);
+      return res.json({
+        text: pdfData.text ? pdfData.text.trim() : '',
+        pages: pdfData.numpages || 1,
+        type: 'pdf',
+        fileName: fileName || 'document.pdf',
+      });
+    }
+
+    if (fileType === 'image' || (fileName && /\.(png|jpe?g|webp|bmp)$/i.test(fileName))) {
+      const cleanBase64 = base64.replace(/^data:image\/\w+;base64,/, '');
+      const buffer = Buffer.from(cleanBase64, 'base64');
+      const { data: { text } } = await Tesseract.recognize(buffer, 'eng');
+      return res.json({
+        text: text ? text.trim() : '',
+        type: 'image',
+        fileName: fileName || 'image.png',
+      });
+    }
+
+    return res.status(400).json({ error: 'Unsupported file format' });
+  } catch (err) {
+    console.error('File extraction error:', err.message);
+    return res.status(500).json({ error: 'Extraction failed: ' + err.message });
+  }
 });
 
 app.post('/api/tts', async (req, res) => {
