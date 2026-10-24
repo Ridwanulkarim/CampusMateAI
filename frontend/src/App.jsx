@@ -306,7 +306,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#dce5f2] p-2 sm:p-3 flex items-center justify-center font-sans relative overflow-x-hidden">
+    <div className="min-h-screen bg-[#dce5f2] p-1.5 sm:p-3 flex items-center justify-center font-sans relative overflow-x-hidden">
       <div className="absolute top-12 left-6 hidden lg:grid grid-cols-4 gap-2.5 opacity-30 pointer-events-none">
         {Array.from({ length: 24 }).map((_, i) => (
           <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#6a90be]" />
@@ -317,26 +317,36 @@ export default function App() {
       <div className="absolute -top-28 -right-28 w-80 h-80 rounded-full bg-[#c7daf0] opacity-60 blur-2xl pointer-events-none" />
       <div className="absolute top-1/2 -right-16 w-60 h-60 rounded-full bg-[#d0e0f5] opacity-40 blur-xl pointer-events-none" />
 
-      <div className="w-full max-w-[98%] 2xl:max-w-[1680px] min-h-[95vh] bg-[#fbfcfe] rounded-[24px] shadow-[0_15px_45px_rgba(40,75,130,0.1)] border border-white p-3 sm:p-4 flex flex-col lg:flex-row gap-3.5 relative z-10 my-auto">
-        <aside className="w-full lg:w-48 shrink-0 bg-white rounded-[20px] p-3 shadow-xs border border-slate-100 flex flex-col gap-3">
-          <div className="flex flex-col items-center text-center pt-0.5">
-            <div className="w-11 h-11 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#3c7bed] shadow-xs mb-1.5">
-              <svg className="w-7 h-7" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 6L28 16H39L30 22L33 32L24 26L15 32L18 22L9 16H20L24 6Z" fill="#3c7bed" opacity="0.15"/>
-                <path d="M14 14C11 18 11 27 16 33C19 36 24 38 24 38C24 38 29 36 32 33C37 27 37 18 34 14" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
-                <path d="M19 18V26C19 28.5 21 30.5 24 30.5C27 30.5 29 28.5 29 26V18" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
-                <circle cx="24" cy="11" r="2.5" fill="#3c7bed"/>
-              </svg>
+      <div className="w-full max-w-[98%] 2xl:max-w-[1680px] min-h-[95vh] bg-[#fbfcfe] rounded-2xl sm:rounded-[24px] shadow-[0_15px_45px_rgba(40,75,130,0.1)] border border-white p-2.5 sm:p-4 flex flex-col lg:flex-row gap-3 relative z-10 my-auto">
+        <aside className="w-full lg:w-48 shrink-0 bg-white rounded-2xl lg:rounded-[20px] p-2.5 sm:p-3 shadow-xs border border-slate-100 flex flex-col lg:gap-3 gap-2">
+          <div className="flex items-center justify-between lg:flex-col lg:text-center pt-0.5">
+            <div className="flex items-center gap-2 lg:flex-col">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#3c7bed] shadow-xs">
+                <svg className="w-5 h-5 sm:w-7 sm:h-7" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 6L28 16H39L30 22L33 32L24 26L15 32L18 22L9 16H20L24 6Z" fill="#3c7bed" opacity="0.15"/>
+                  <path d="M14 14C11 18 11 27 16 33C19 36 24 38 24 38C24 38 29 36 32 33C37 27 37 18 34 14" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                  <path d="M19 18V26C19 28.5 21 30.5 24 30.5C27 30.5 29 28.5 29 26V18" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                  <circle cx="24" cy="11" r="2.5" fill="#3c7bed"/>
+                </svg>
+              </div>
+              <div className="text-left lg:text-center">
+                <span className="font-extrabold text-xs tracking-tight text-slate-800 block">
+                  IIUC PORTAL
+                </span>
+                <span className="text-[9px] font-bold text-[#3c7bed] tracking-wide block">
+                  CampusMate AI
+                </span>
+              </div>
             </div>
-            <span className="font-extrabold text-xs tracking-tight text-slate-800">
-              IIUC PORTAL
-            </span>
-            <span className="text-[9px] font-bold text-[#3c7bed] tracking-wide">
-              CampusMate AI
-            </span>
+
+            <div className="lg:hidden flex items-center gap-1.5">
+              <span className="bg-[#22c55e] text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-2xs">
+                Active
+              </span>
+            </div>
           </div>
 
-          <nav className="flex flex-col gap-1">
+          <nav className="flex flex-row lg:flex-col gap-1 overflow-x-auto pb-1 lg:pb-0 scrollbar-none no-scrollbar -mx-1 px-1">
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -347,23 +357,23 @@ export default function App() {
                     setActiveTab(tab.id);
                     setError('');
                   }}
-                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left ${
+                  className={`whitespace-nowrap shrink-0 flex items-center gap-2 px-3 py-1.5 lg:py-2 rounded-xl text-xs font-semibold transition-all text-left ${
                     isActive
                       ? 'bg-[#edf4fe] text-[#3c7bed] shadow-2xs font-bold'
                       : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
                   }`}
                 >
                   <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#3c7bed]' : 'text-slate-400'}`} />
-                  <span className="truncate">{tab.label}</span>
+                  <span>{tab.label}</span>
                 </button>
               );
             })}
           </nav>
         </aside>
 
-        <main className="flex-1 flex flex-col gap-3.5 min-w-0">
-          <header className="flex flex-wrap items-center justify-between gap-3">
-            <div className="flex items-center gap-2.5">
+        <main className="flex-1 flex flex-col gap-3 min-w-0">
+          <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <div className="hidden lg:flex items-center gap-2.5">
               <h1 className="text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">
                 Welcome, Student!
               </h1>
@@ -372,13 +382,13 @@ export default function App() {
               </span>
             </div>
 
-            <div className="flex items-center gap-2">
-              <div className="flex items-center gap-1.5 bg-white border border-slate-200/90 rounded-xl px-2.5 py-1 text-slate-700 shadow-2xs">
+            <div className="flex flex-wrap items-center justify-between sm:justify-end gap-2 w-full lg:w-auto">
+              <div className="flex items-center gap-1.5 bg-white border border-slate-200/90 rounded-xl px-2 py-1 text-slate-700 shadow-2xs">
                 <Cpu className="w-3.5 h-3.5 text-[#3c7bed]" />
                 <select
                   value={model}
                   onChange={(e) => setModel(e.target.value)}
-                  className="bg-transparent text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer pr-1"
+                  className="bg-transparent text-[11px] sm:text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer pr-1"
                 >
                   <option value="gemma4:e2b">gemma4:e2b (Fast Edge)</option>
                   <option value="gemma4:12b">gemma4:12b (Deep Reasoning)</option>
@@ -389,46 +399,46 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setLanguage('auto')}
-                  className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                  className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
                     language === 'auto'
                       ? 'bg-[#3c7bed] text-white shadow-2xs'
                       : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
-                  ⚡ Auto (Detect)
+                  ⚡ Auto
                 </button>
                 <button
                   type="button"
                   onClick={() => setLanguage('bangla')}
-                  className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                  className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
                     language === 'bangla'
                       ? 'bg-[#22c55e] text-white shadow-2xs'
                       : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
-                  🇧🇩 বাংলায়
+                  🇧🇩 বাংলা
                 </button>
                 <button
                   type="button"
                   onClick={() => setLanguage('english')}
-                  className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                  className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
                     language === 'english'
                       ? 'bg-slate-800 text-white shadow-2xs'
                       : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
-                  🇬🇧 English
+                  🇬🇧 EN
                 </button>
               </div>
 
-              <button className="w-7 h-7 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 shadow-2xs transition-colors">
+              <button className="hidden sm:flex w-7 h-7 rounded-full bg-white border border-slate-200 items-center justify-center text-slate-600 hover:text-slate-900 shadow-2xs transition-colors">
                 <Search className="w-3 h-3" />
               </button>
             </div>
           </header>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3.5 items-start">
-            <div className="lg:col-span-4 bg-white rounded-[20px] p-3.5 shadow-xs border border-slate-100 flex flex-col gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-start">
+            <div className="lg:col-span-4 bg-white rounded-2xl sm:rounded-[20px] p-3 sm:p-3.5 shadow-xs border border-slate-100 flex flex-col gap-2.5">
               <div className="flex items-center justify-between">
                 <h3 className="font-extrabold text-xs text-slate-800">
                   Classes for the day
@@ -439,8 +449,8 @@ export default function App() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-2.5">
-                <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-xl p-3 transition-colors">
+              <div className="flex flex-col gap-2">
+                <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-xl p-2.5 sm:p-3 transition-colors">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-slate-900">
                       Female Students Shift
@@ -458,7 +468,7 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-xl p-3 transition-colors">
+                <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-xl p-2.5 sm:p-3 transition-colors">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-slate-900">
                       Male Students Shift
@@ -476,7 +486,7 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="bg-[#f8faff] border border-slate-100 rounded-xl p-3">
+                <div className="bg-[#f8faff] border border-slate-100 rounded-xl p-2.5 sm:p-3">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-slate-900">
                       IIUC Transit Routes
@@ -485,7 +495,7 @@ export default function App() {
                       Active
                     </span>
                   </div>
-                  <div className="flex flex-wrap gap-1 mt-2">
+                  <div className="flex flex-wrap gap-1 mt-1.5">
                     {['Chawkbazar', 'Bahaddarhat', 'GEC Circle', 'Agrabad', 'Oxygen', 'Badamtoli', 'AK Khan', 'Bhatiary'].map((route) => (
                       <span
                         key={route}
@@ -499,8 +509,8 @@ export default function App() {
               </div>
             </div>
 
-            <div className="lg:col-span-5 flex flex-col gap-3.5">
-              <div className="bg-white rounded-[20px] p-3.5 shadow-xs border border-slate-100 flex flex-col gap-2.5">
+            <div className="lg:col-span-5 flex flex-col gap-3">
+              <div className="bg-white rounded-2xl sm:rounded-[20px] p-3 sm:p-3.5 shadow-xs border border-slate-100 flex flex-col gap-2.5">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-[#3c7bed]" />
@@ -524,14 +534,14 @@ export default function App() {
                     <button
                       key={idx}
                       onClick={() => handlePreset(p.text)}
-                      className="text-[10px] bg-[#f0f4fa] hover:bg-[#edf4fe] text-[#3c7bed] px-2 py-0.5 rounded-lg border border-blue-100/70 transition-colors font-medium shadow-2xs"
+                      className="text-[10px] bg-[#f0f4fa] hover:bg-[#edf4fe] text-[#3c7bed] px-2.5 py-1 rounded-lg border border-blue-100/70 transition-colors font-medium shadow-2xs text-left"
                     >
                       {p.title}
                     </button>
                   ))}
                 </div>
 
-                <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                <div className="flex flex-wrap items-center gap-1.5 pt-0.5">
                   <input
                     type="file"
                     ref={pdfInputRef}
@@ -551,7 +561,7 @@ export default function App() {
                     type="button"
                     disabled={uploadingFile}
                     onClick={() => pdfInputRef.current?.click()}
-                    className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2 py-1 rounded-lg transition-colors shadow-2xs"
+                    className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2.5 py-1 rounded-lg transition-colors shadow-2xs"
                   >
                     <FileText className="w-3 h-3 text-red-500" />
                     <span>Upload PDF</span>
@@ -561,7 +571,7 @@ export default function App() {
                     type="button"
                     disabled={uploadingFile}
                     onClick={() => imageInputRef.current?.click()}
-                    className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2 py-1 rounded-lg transition-colors shadow-2xs"
+                    className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2.5 py-1 rounded-lg transition-colors shadow-2xs"
                   >
                     <Image className="w-3 h-3 text-blue-500" />
                     <span>Upload Image</span>
@@ -575,12 +585,12 @@ export default function App() {
                   )}
 
                   {uploadedFile && (
-                    <span className="flex items-center gap-1 text-[10px] bg-blue-50 text-[#3c7bed] border border-blue-200 px-2 py-0.5 rounded-md font-semibold">
-                      <span>📄 {uploadedFile.name}</span>
+                    <span className="flex items-center gap-1 text-[10px] bg-blue-50 text-[#3c7bed] border border-blue-200 px-2 py-0.5 rounded-md font-semibold truncate max-w-full">
+                      <span className="truncate">📄 {uploadedFile.name}</span>
                       <button
                         type="button"
                         onClick={() => setUploadedFile(null)}
-                        className="hover:text-red-600 ml-1 font-bold"
+                        className="hover:text-red-600 ml-1 font-bold shrink-0"
                       >
                         ×
                       </button>
@@ -593,18 +603,18 @@ export default function App() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask any campus question, click a preset, or upload PDF slides / notes photo..."
                   rows={3}
-                  className="w-full bg-[#f8faff] border border-slate-200/90 rounded-xl p-2.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#3c7bed] focus:ring-2 focus:ring-[#3c7bed]/15 transition-all font-sans leading-relaxed"
+                  className="w-full bg-[#f8faff] border border-slate-200/90 rounded-xl p-2.5 text-sm sm:text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#3c7bed] focus:ring-2 focus:ring-[#3c7bed]/15 transition-all font-sans leading-relaxed"
                 />
 
-                <div className="flex items-center justify-between pt-0.5">
-                  <span className="text-[10px] text-slate-400 font-medium">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-0.5">
+                  <span className="text-[10px] text-slate-400 font-medium hidden sm:inline">
                     Shift + Enter for new line
                   </span>
 
                   <button
                     onClick={handleSubmit}
                     disabled={loading || !input.trim()}
-                    className={`flex items-center gap-1.5 px-4 py-1.5 rounded-xl font-bold text-xs transition-all shadow-sm ${
+                    className={`flex items-center justify-center gap-1.5 px-4 py-2 sm:py-1.5 rounded-xl font-bold text-xs transition-all shadow-sm w-full sm:w-auto ${
                       loading || !input.trim()
                         ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
                         : 'bg-[#4f8cf6] hover:bg-[#3b7ee8] text-white shadow-blue-500/20 active:scale-98'
@@ -631,7 +641,7 @@ export default function App() {
                 )}
               </div>
 
-              <div className="bg-white rounded-[20px] p-3.5 shadow-xs border border-slate-100 flex flex-col gap-2.5 min-h-[200px]">
+              <div className="bg-white rounded-2xl sm:rounded-[20px] p-3 sm:p-3.5 shadow-xs border border-slate-100 flex flex-col gap-2.5 min-h-[190px]">
                 <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-2 gap-2">
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-xs text-slate-800 uppercase tracking-wider">
@@ -645,7 +655,7 @@ export default function App() {
                   </div>
 
                   {response && (
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto justify-end">
                       <div className="flex items-center bg-slate-100 rounded-lg p-0.5 border border-slate-200">
                         <button
                           type="button"
@@ -701,7 +711,7 @@ export default function App() {
                 </div>
 
                 {loading ? (
-                  <div className="flex-1 flex flex-col items-center justify-center py-8 text-center text-slate-500 gap-2">
+                  <div className="flex-1 flex flex-col items-center justify-center py-6 text-center text-slate-500 gap-2">
                     <div className="w-7 h-7 border-3 border-blue-100 border-t-[#3c7bed] rounded-full animate-spin"></div>
                     <span className="text-xs text-slate-700 font-bold">Synthesizing instant response...</span>
                   </div>
@@ -710,7 +720,7 @@ export default function App() {
                     {response}
                   </div>
                 ) : (
-                  <div className="flex-1 flex flex-col items-center justify-center py-8 text-center text-slate-400 gap-2">
+                  <div className="flex-1 flex flex-col items-center justify-center py-6 text-center text-slate-400 gap-2">
                     <div className="w-7 h-7 rounded-full bg-blue-50 flex items-center justify-center text-[#3c7bed]">
                       <Sparkles className="w-3.5 h-3.5" />
                     </div>
@@ -722,8 +732,8 @@ export default function App() {
               </div>
             </div>
 
-            <div className="lg:col-span-3 bg-white rounded-[20px] p-3.5 shadow-xs border border-slate-100 flex flex-col justify-between gap-3">
-              <div className="flex flex-col gap-3">
+            <div className="lg:col-span-3 bg-white rounded-2xl sm:rounded-[20px] p-3 sm:p-3.5 shadow-xs border border-slate-100 flex flex-col justify-between gap-3">
+              <div className="flex flex-col gap-2.5">
                 <div className="flex items-center justify-between">
                   <h3 className="font-extrabold text-xs text-slate-800">
                     News & Updates
@@ -731,7 +741,7 @@ export default function App() {
                   <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
                 </div>
 
-                <div className="rounded-xl overflow-hidden border border-blue-100 bg-gradient-to-br from-[#3b7ee8] via-[#5b95f5] to-[#8db8fc] p-3 text-white shadow-sm flex flex-col justify-between min-h-[115px] relative">
+                <div className="rounded-xl overflow-hidden border border-blue-100 bg-gradient-to-br from-[#3b7ee8] via-[#5b95f5] to-[#8db8fc] p-3 text-white shadow-sm flex flex-col justify-between min-h-[110px] relative">
                   <div className="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-white/10 blur-sm pointer-events-none" />
                   <div className="relative z-10 flex items-center justify-between">
                     <span className="text-[9px] font-extrabold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full backdrop-blur-xs">
@@ -760,7 +770,7 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-1.5">
                   <div className="flex items-start gap-2 p-1.5 rounded-lg hover:bg-slate-50 transition-colors">
                     <div className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-[9px] shrink-0">
                       TD
