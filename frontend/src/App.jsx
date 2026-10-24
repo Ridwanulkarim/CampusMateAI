@@ -61,15 +61,15 @@ const PRESETS = {
   bus: [
     {
       title: '🇧🇩 বাংলায় বাসের সময়সূচী',
-      text: 'IIUC কুমিরা ক্যাম্পাসে ফিমেল এবং মেল স্টুডেন্টদের সকালের ও বিকেলের বাসের সঠিক সময়সূচী এবং কোন গেট দিয়ে বাস ছাড়ে বাংলায় বিস্তারিত জানাও।',
+      text: 'IIUC কুমিরা ক্যাম্পাসে ফিমেল (শহর থেকে সকাল ৭:৩০, ক্যাম্পাস থেকে দুপুর ১:৪০) এবং মেল (শহর থেকে সকাল ৯:০৫, ক্যাম্পাস থেকে বিকাল ৪:৪০) স্টুডেন্টদের বাসের শিডিউল ও রুট বাংলায় বিস্তারিত জানাও।',
     },
     {
-      title: '🧕 Female Bus Schedule (3:00 PM Return)',
-      text: 'Female students classes at IIUC end at 3:00 PM. What are the exact morning departures and 3:00 PM afternoon return bus schedules from Kumira Gate 2?',
+      title: '🧕 Female Bus (City: 7:30 AM | Univ: 1:40 PM)',
+      text: 'What is the exact bus schedule for Female students at IIUC? (City starting departure: 7:30 AM, Kumira return departure: 1:40 PM from Gate 2)',
     },
     {
-      title: '👨 Male Students Bus Schedule & Routes',
-      text: 'What are the morning departure times from city points (Agrabad, Chawkbazar, GEC) and afternoon return bus schedules for Male students at IIUC?',
+      title: '👨 Male Bus (City: 9:05 AM | Univ: 4:40 PM)',
+      text: 'What is the exact bus schedule for Male students at IIUC? (City starting departure: 9:05 AM, Kumira return departure: 4:40 PM from Gate 1)',
     },
   ],
   study: [

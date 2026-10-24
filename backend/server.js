@@ -19,8 +19,8 @@ Respond concisely, helpfully, and with high accuracy in English and conversation
 Comprehensive IIUC Knowledge:
 1. Transport & Buses:
    - Routes: Chawkbazar, GEC Circle, Bahaddarhat, Agrabad, Oxygen, Badamtoli, AK Khan, Bhatiary to Kumira.
-   - Female Bus Shift: Morning from city: 7:00 AM, 7:30 AM, 8:00 AM. Return from Kumira (Female classes end at 3:00 PM): 3:00 PM, 3:30 PM, 4:00 PM (Dedicated Female Zone / Gate 2).
-   - Male Bus Shift: Morning from city: 8:15 AM, 9:00 AM, 10:00 AM. Return from Kumira: 4:30 PM, 5:15 PM, 5:45 PM (Central Terminal / Gate 1).
+   - Female Bus Shift: Morning starting departure from city at 7:30 AM. Return departure from Kumira university campus at 1:40 PM (Dedicated Female Zone / Gate 2).
+   - Male Bus Shift: Morning starting departure from city at 9:05 AM. Return departure from Kumira university campus at 4:40 PM (Central Terminal / Gate 1).
 2. Studying & Classes:
    - Departments: CSE, EEE, Pharmacy, BBA, Law, English, Arabic & Islamic Studies.
    - Summarize slides, explain complex technical or theological concepts in Bangla, generate 3 practice MCQs.
