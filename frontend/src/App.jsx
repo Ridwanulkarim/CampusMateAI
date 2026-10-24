@@ -9,51 +9,49 @@ import {
   RotateCcw, 
   Send, 
   Cpu, 
-  GraduationCap, 
-  HelpCircle,
-  ShieldCheck,
-  Users,
-  Briefcase,
-  AlertCircle,
-  Volume2,
-  Languages
+  Users, 
+  Briefcase, 
+  Volume2, 
+  Search, 
+  Bell, 
+  SlidersHorizontal,
+  ArrowUpRight,
+  Clock,
+  MapPin,
+  CheckCircle2,
+  Calendar
 } from 'lucide-react';
 
 const TABS = [
   { 
     id: 'bus', 
-    label: 'Daily Transport Booking', 
+    label: 'Overview & Buses', 
     icon: Bus, 
-    desc: 'Kumira bus timings, Agrabad/GEC/Chawkbazar routes & seat guide',
-    color: 'from-purple-600 to-fuchsia-600'
+    desc: 'Kumira bus timings, Agrabad/GEC/Chawkbazar routes & seat guide'
   },
   { 
     id: 'study', 
-    label: 'Academic & Exam Prep', 
+    label: 'Academic & Exam', 
     icon: BookOpen, 
-    desc: 'Lecture notes to summaries, Bangla explainer & 3 MCQs quiz',
-    color: 'from-sky-600 to-blue-600'
+    desc: 'Lecture notes to summaries, Bangla explainer & 3 MCQs quiz'
   },
   { 
     id: 'admin', 
     label: 'Registration & Admin', 
     icon: Building2, 
-    desc: 'Pre-registration, fee clearance, admit card & campus offices',
-    color: 'from-emerald-600 to-teal-600'
+    desc: 'Pre-registration, fee clearance, admit card & campus offices'
   },
   { 
     id: 'life', 
     label: 'Student Life & Halls', 
     icon: Users, 
-    desc: 'Cafeteria, Kumira residential halls, clubs & lost-and-found',
-    color: 'from-amber-600 to-orange-600'
+    desc: 'Cafeteria, Kumira residential halls, clubs & lost-and-found'
   },
   { 
     id: 'career', 
     label: 'Career & Roadmaps', 
     icon: Briefcase, 
-    desc: 'CSE, EEE, BBA skill roadmaps, CV reviews & internship tips',
-    color: 'from-rose-600 to-pink-600'
+    desc: 'CSE, EEE, BBA skill roadmaps, CV reviews & internship tips'
   },
 ];
 
@@ -230,176 +228,104 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] text-slate-800 flex flex-col font-sans">
-      <header className="border-b border-slate-200/90 bg-white/95 backdrop-blur-md sticky top-0 z-50 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-600 to-fuchsia-600 flex items-center justify-center text-white shadow-sm shadow-fuchsia-500/20">
-              <GraduationCap className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-lg tracking-tight text-slate-900">
-                  IIUC PORTAL
-                </span>
-                <span className="text-[11px] font-bold px-2 py-0.5 rounded-full bg-gradient-to-r from-purple-600 to-fuchsia-600 text-white shadow-xs">
-                  CampusMate AI
-                </span>
+    <div className="min-h-screen bg-[#dce5f2] py-4 sm:py-8 px-2 sm:px-6 flex items-center justify-center font-sans relative overflow-hidden">
+      <div className="absolute top-16 left-6 hidden lg:grid grid-cols-4 gap-3 opacity-35 pointer-events-none">
+        {Array.from({ length: 24 }).map((_, i) => (
+          <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#6a90be]" />
+        ))}
+      </div>
+
+      <div className="absolute -bottom-20 -left-20 w-80 h-80 rounded-full border-[18px] border-[#c7d9ee] opacity-60 pointer-events-none" />
+      <div className="absolute -top-32 -right-32 w-96 h-96 rounded-full bg-[#c7daf0] opacity-70 blur-2xl pointer-events-none" />
+      <div className="absolute top-1/2 -right-20 w-72 h-72 rounded-full bg-[#d0e0f5] opacity-50 blur-xl pointer-events-none" />
+
+      <div className="w-full max-w-[1380px] bg-[#fbfcfe] rounded-[34px] shadow-[0_25px_70px_rgba(40,75,130,0.14)] border border-white p-4 sm:p-7 flex flex-col lg:flex-row gap-6 relative z-10">
+        <aside className="w-full lg:w-56 shrink-0 bg-white rounded-[26px] p-5 shadow-[0_4px_24px_rgba(70,110,170,0.06)] border border-slate-100 flex flex-col justify-between gap-6">
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-col items-center text-center pt-1">
+              <div className="w-14 h-14 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#3c7bed] shadow-xs mb-2">
+                <svg className="w-9 h-9" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M24 6L28 16H39L30 22L33 32L24 26L15 32L18 22L9 16H20L24 6Z" fill="#3c7bed" opacity="0.15"/>
+                  <path d="M14 14C11 18 11 27 16 33C19 36 24 38 24 38C24 38 29 36 32 33C37 27 37 18 34 14" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                  <path d="M19 18V26C19 28.5 21 30.5 24 30.5C27 30.5 29 28.5 29 26V18" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                  <circle cx="24" cy="11" r="2.5" fill="#3c7bed"/>
+                </svg>
               </div>
-              <p className="text-xs text-slate-500 font-medium">Smart Campus & Academic Copilot</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>Gemma 4 AI Engine</span>
+              <span className="font-extrabold text-sm tracking-tight text-slate-800">
+                IIUC PORTAL
+              </span>
+              <span className="text-[10px] font-bold text-[#3c7bed] tracking-wide">
+                CampusMate AI
+              </span>
             </div>
 
-            <div className="flex items-center gap-2 bg-slate-100/90 border border-slate-200/90 rounded-xl px-2.5 py-1 text-slate-700">
-              <Cpu className="w-4 h-4 text-purple-600" />
-              <select
-                value={model}
-                onChange={(e) => setModel(e.target.value)}
-                className="bg-transparent text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer pr-1"
-              >
-                <option value="gemma4:e2b">gemma4:e2b (Fast Edge)</option>
-                <option value="gemma4:12b">gemma4:12b (Deep Reasoning)</option>
-              </select>
+            <nav className="flex flex-col gap-1.5">
+              {TABS.map((tab) => {
+                const Icon = tab.icon;
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => {
+                      setActiveTab(tab.id);
+                      setError('');
+                    }}
+                    className={`flex items-center gap-3 px-3.5 py-2.5 rounded-2xl text-xs font-semibold transition-all text-left ${
+                      isActive
+                        ? 'bg-[#edf4fe] text-[#3c7bed] shadow-2xs font-bold'
+                        : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
+                    }`}
+                  >
+                    <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-[#3c7bed]' : 'text-slate-400'}`} />
+                    <span className="truncate">{tab.label}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="pt-2">
+            <button
+              onClick={() => setActiveTab('bus')}
+              className="w-full bg-[#4f8cf6] hover:bg-[#3b7ee8] text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-xs transition-colors text-center"
+            >
+              Sign Out
+            </button>
+          </div>
+        </aside>
+
+        <main className="flex-1 flex flex-col gap-5 min-w-0">
+          <header className="flex flex-wrap items-center justify-between gap-4 pb-1">
+            <div className="flex items-center gap-3">
+              <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-800 tracking-tight">
+                Welcome, Student!
+              </h1>
+              <span className="bg-[#22c55e] text-white text-[11px] font-bold px-3 py-0.5 rounded-full shadow-2xs">
+                Active
+              </span>
             </div>
-          </div>
-        </div>
-      </header>
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-4 py-6 flex flex-col gap-5">
-        <div className="bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 rounded-2xl p-3.5 text-white shadow-sm flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
-            <AlertCircle className="w-5 h-5 shrink-0" />
-            <p className="text-xs md:text-sm font-semibold">
-              IIUC Portal AI Companion covers all 5 student pillars: Buses, Study Quizzes, Pre-Registration, Halls & Career Roadmaps.
-            </p>
-          </div>
-          <span className="hidden sm:inline-block shrink-0 text-xs bg-white/20 px-2.5 py-1 rounded-lg font-medium backdrop-blur-xs">
-            Kumira Campus
-          </span>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
-          {TABS.map((tab) => {
-            const Icon = tab.icon;
-            const isActive = activeTab === tab.id;
-            return (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id);
-                  setError('');
-                }}
-                className={`flex flex-col items-start gap-2.5 p-3.5 rounded-2xl border transition-all text-left shadow-xs ${
-                  isActive
-                    ? 'bg-white border-purple-400/80 shadow-md shadow-purple-500/10 ring-2 ring-purple-500/20'
-                    : 'bg-white/80 border-slate-200/90 hover:bg-white hover:border-slate-300 text-slate-600'
-                }`}
-              >
-                <div
-                  className={`p-2 rounded-xl ${
-                    isActive
-                      ? `bg-gradient-to-r ${tab.color} text-white shadow-sm`
-                      : 'bg-slate-100 text-slate-500'
-                  }`}
+            <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-1.5 bg-white border border-slate-200/90 rounded-xl px-2.5 py-1 text-slate-700 shadow-2xs">
+                <Cpu className="w-3.5 h-3.5 text-[#3c7bed]" />
+                <select
+                  value={model}
+                  onChange={(e) => setModel(e.target.value)}
+                  className="bg-transparent text-xs font-semibold text-slate-700 focus:outline-none cursor-pointer pr-1"
                 >
-                  <Icon className="w-4 h-4" />
-                </div>
-                <div>
-                  <h3 className={`font-bold text-xs ${isActive ? 'text-slate-900' : 'text-slate-700'}`}>
-                    {tab.label}
-                  </h3>
-                  <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-2 leading-tight">
-                    {tab.desc}
-                  </p>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        <div className="bg-white border border-slate-200/90 rounded-2xl p-3.5 shadow-xs flex flex-wrap items-center gap-2">
-          <span className="text-xs font-bold text-slate-600 flex items-center gap-1.5 pl-1">
-            <Sparkles className="w-3.5 h-3.5 text-purple-600" />
-            Quick Demo Presets:
-          </span>
-          <div className="flex flex-wrap gap-2">
-            {PRESETS[activeTab]?.map((p, idx) => (
-              <button
-                key={idx}
-                onClick={() => handlePreset(p.text)}
-                className="text-xs bg-slate-50 hover:bg-purple-50 hover:text-purple-700 hover:border-purple-200 text-slate-700 px-3 py-1.5 rounded-xl border border-slate-200/80 transition-colors font-medium shadow-2xs"
-              >
-                {p.title}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        {activeTab === 'bus' && (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <div className="bg-gradient-to-r from-fuchsia-500/10 via-purple-500/10 to-pink-500/10 border border-fuchsia-200/90 rounded-2xl p-4 shadow-xs flex items-center justify-between">
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-fuchsia-600 to-purple-600 flex items-center justify-center text-white text-lg font-bold shadow-xs">
-                  🧕
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-sm text-slate-900">Female Students Shift</span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-fuchsia-100 text-fuchsia-700 border border-fuchsia-200">
-                      Gate 2
-                    </span>
-                  </div>
-                  <div className="text-xs text-slate-700 mt-1 font-medium flex flex-wrap gap-x-3 gap-y-0.5">
-                    <span>🏙️ <strong className="text-slate-900">From City:</strong> 7:30 AM (Starting)</span>
-                    <span>🏛️ <strong className="text-slate-900">From University:</strong> 1:40 PM (Return)</span>
-                  </div>
-                </div>
+                  <option value="gemma4:e2b">gemma4:e2b (Fast Edge)</option>
+                  <option value="gemma4:12b">gemma4:12b (Deep Reasoning)</option>
+                </select>
               </div>
-            </div>
 
-            <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 border border-indigo-200/90 rounded-2xl p-4 shadow-xs flex items-center justify-between">
-              <div className="flex items-center gap-3.5">
-                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white text-lg font-bold shadow-xs">
-                  👨
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <span className="font-extrabold text-sm text-slate-900">Male Students Shift</span>
-                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">
-                      Gate 1
-                    </span>
-                  </div>
-                  <div className="text-xs text-slate-700 mt-1 font-medium flex flex-wrap gap-x-3 gap-y-0.5">
-                    <span>🏙️ <strong className="text-slate-900">From City:</strong> 9:05 AM (Starting)</span>
-                    <span>🏛️ <strong className="text-slate-900">From University:</strong> 4:40 PM (Return)</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex flex-col gap-3.5">
-            <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-2.5 gap-2">
-              <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5 uppercase tracking-wider">
-                <span>Student Query / Lecture Content</span>
-              </label>
-
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1 bg-white border border-slate-200/90 rounded-xl p-1 shadow-2xs">
                 <button
                   type="button"
                   onClick={() => setLanguage('bilingual')}
                   className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
                     language === 'bilingual'
-                      ? 'bg-purple-600 text-white shadow-xs'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-[#3c7bed] text-white shadow-2xs'
+                      : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
                   🌐 EN + বাংলা
@@ -409,8 +335,8 @@ export default function App() {
                   onClick={() => setLanguage('bangla')}
                   className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
                     language === 'bangla'
-                      ? 'bg-emerald-600 text-white shadow-xs'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-[#22c55e] text-white shadow-2xs'
+                      : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
                   🇧🇩 বাংলায়
@@ -420,154 +346,327 @@ export default function App() {
                   onClick={() => setLanguage('english')}
                   className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
                     language === 'english'
-                      ? 'bg-blue-600 text-white shadow-xs'
-                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                      ? 'bg-slate-800 text-white shadow-2xs'
+                      : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
                   🇬🇧 English
                 </button>
-
-                {input && (
-                  <button
-                    onClick={handleClear}
-                    className="text-xs font-medium text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors pl-1"
-                  >
-                    <RotateCcw className="w-3 h-3" />
-                    Clear
-                  </button>
-                )}
-              </div>
-            </div>
-
-            <textarea
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask anything or click a preset button above to see instant answers..."
-              rows={11}
-              className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl p-3.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/15 transition-all font-sans leading-relaxed"
-            />
-
-            <div className="flex items-center justify-between pt-1">
-              <div className="text-xs text-slate-400">
-                Shift + Enter for new line
               </div>
 
-              <button
-                onClick={handleSubmit}
-                disabled={loading || !input.trim()}
-                className={`flex items-center gap-2 px-6 py-2.5 rounded-xl font-bold text-sm transition-all shadow-md ${
-                  loading || !input.trim()
-                    ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
-                    : 'bg-gradient-to-r from-purple-600 to-fuchsia-600 hover:from-purple-700 hover:to-fuchsia-700 text-white shadow-purple-500/25 active:scale-98'
-                }`}
-              >
-                {loading ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Processing with Gemma...</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4" />
-                    <span>Ask CampusMate</span>
-                  </>
-                )}
+              <button className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 shadow-2xs transition-colors">
+                <Search className="w-3.5 h-3.5" />
               </button>
+
+              <button className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 shadow-2xs transition-colors relative">
+                <Bell className="w-3.5 h-3.5" />
+                <span className="w-2 h-2 rounded-full bg-[#22c55e] absolute top-1 right-1"></span>
+              </button>
+
+              <div className="w-8 h-8 rounded-full bg-[#3c7bed] text-white flex items-center justify-center font-bold text-xs shadow-2xs">
+                RK
+              </div>
+            </div>
+          </header>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-5 items-start">
+            <div className="lg:col-span-4 bg-white rounded-[24px] p-5 shadow-[0_4px_24px_rgba(70,110,170,0.05)] border border-slate-100 flex flex-col gap-4">
+              <div className="flex items-center justify-between">
+                <h3 className="font-extrabold text-sm text-slate-800">
+                  Classes for the day
+                </h3>
+                <div className="flex items-center gap-1.5 text-slate-400">
+                  <Search className="w-3.5 h-3.5" />
+                  <SlidersHorizontal className="w-3.5 h-3.5" />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-3">
+                <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-2xl p-3.5 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-xs text-slate-900">
+                      Female Students Shift
+                    </span>
+                    <span className="text-[10px] bg-blue-100 text-[#3c7bed] font-bold px-2 py-0.5 rounded-full">
+                      Gate 2
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px] mt-1 font-medium">
+                    <Clock className="w-3 h-3 text-[#3c7bed]" />
+                    <span>City: 7:30 AM • Univ: 1:40 PM</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 mt-2 leading-relaxed">
+                    Morning departure starts at 7:30 AM from Chawkbazar, Bahaddarhat, GEC, Agrabad to Kumira. Return bus departs at 1:40 PM from Gate 2.
+                  </p>
+                </div>
+
+                <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-2xl p-3.5 transition-colors">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-xs text-slate-900">
+                      Male Students Shift
+                    </span>
+                    <span className="text-[10px] bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded-full">
+                      Gate 1
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-1.5 text-slate-400 text-[11px] mt-1 font-medium">
+                    <Clock className="w-3 h-3 text-indigo-600" />
+                    <span>City: 9:05 AM • Univ: 4:40 PM</span>
+                  </div>
+                  <p className="text-[11px] text-slate-600 mt-2 leading-relaxed">
+                    Morning departure starts at 9:05 AM from city stops to Kumira campus. Return bus departs at 4:40 PM from Central Terminal Gate 1.
+                  </p>
+                </div>
+
+                <div className="bg-[#f8faff] border border-slate-100 rounded-2xl p-3.5">
+                  <div className="flex items-center justify-between">
+                    <span className="font-bold text-xs text-slate-900">
+                      IIUC Transit Routes
+                    </span>
+                    <span className="text-[10px] bg-emerald-100 text-emerald-700 font-bold px-2 py-0.5 rounded-full">
+                      Active
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-1.5 mt-2.5">
+                    {['Chawkbazar', 'Bahaddarhat', 'GEC Circle', 'Agrabad', 'Oxygen', 'Badamtoli', 'AK Khan', 'Bhatiary'].map((route) => (
+                      <span
+                        key={route}
+                        className="text-[10px] font-semibold bg-white border border-slate-200 text-slate-600 px-2 py-0.5 rounded-lg"
+                      >
+                        {route}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {error && (
-              <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-600 font-medium">
-                {error}
-              </div>
-            )}
-          </div>
+            <div className="lg:col-span-5 flex flex-col gap-5">
+              <div className="bg-white rounded-[24px] p-5 shadow-[0_4px_24px_rgba(70,110,170,0.05)] border border-slate-100 flex flex-col gap-3.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <Sparkles className="w-3.5 h-3.5 text-[#3c7bed]" />
+                    <span className="font-extrabold text-xs text-slate-800 uppercase tracking-wider">
+                      Student Query / Copilot
+                    </span>
+                  </div>
+                  {input && (
+                    <button
+                      onClick={handleClear}
+                      className="text-[11px] font-semibold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      Clear
+                    </button>
+                  )}
+                </div>
 
-          <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex flex-col gap-3.5 min-h-[380px]">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
-              <div className="flex items-center gap-2">
-                <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                  Gemma 4 Synthesis & Response
-                </span>
-                {provider && (
-                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border font-semibold bg-purple-50 border-purple-200 text-purple-700">
-                    {provider}
+                <div className="flex flex-wrap gap-1.5">
+                  {PRESETS[activeTab]?.map((p, idx) => (
+                    <button
+                      key={idx}
+                      onClick={() => handlePreset(p.text)}
+                      className="text-[11px] bg-[#f0f4fa] hover:bg-[#edf4fe] text-[#3c7bed] px-2.5 py-1 rounded-xl border border-blue-100/70 transition-colors font-medium shadow-2xs"
+                    >
+                      {p.title}
+                    </button>
+                  ))}
+                </div>
+
+                <textarea
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Ask any campus question or select a preset above..."
+                  rows={4}
+                  className="w-full bg-[#f8faff] border border-slate-200/90 rounded-2xl p-3.5 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#3c7bed] focus:ring-2 focus:ring-[#3c7bed]/15 transition-all font-sans leading-relaxed"
+                />
+
+                <div className="flex items-center justify-between pt-0.5">
+                  <span className="text-[10px] text-slate-400 font-medium">
+                    Shift + Enter for new line
                   </span>
-                )}
-              </div>
-
-              {response && (
-                <div className="flex items-center gap-1.5">
-                  <button
-                    onClick={handleSpeak}
-                    disabled={playingVoice}
-                    className="flex items-center gap-1.5 text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 px-2.5 py-1 rounded-lg border border-purple-200 transition-colors shadow-2xs"
-                  >
-                    <Volume2 className={`w-3.5 h-3.5 ${playingVoice ? 'animate-bounce text-fuchsia-600' : ''}`} />
-                    <span>{playingVoice ? 'Speaking...' : 'Listen Voice'}</span>
-                  </button>
 
                   <button
-                    onClick={handleCopy}
-                    className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-purple-700 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-purple-50 border border-slate-200 transition-colors"
+                    onClick={handleSubmit}
+                    disabled={loading || !input.trim()}
+                    className={`flex items-center gap-2 px-5 py-2 rounded-xl font-bold text-xs transition-all shadow-sm ${
+                      loading || !input.trim()
+                        ? 'bg-slate-100 text-slate-400 cursor-not-allowed border border-slate-200'
+                        : 'bg-[#4f8cf6] hover:bg-[#3b7ee8] text-white shadow-blue-500/20 active:scale-98'
+                    }`}
                   >
-                    {copied ? (
+                    {loading ? (
                       <>
-                        <Check className="w-3.5 h-3.5 text-emerald-600" />
-                        <span className="text-emerald-600">Copied!</span>
+                        <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        <span>Processing...</span>
                       </>
                     ) : (
                       <>
-                        <Copy className="w-3.5 h-3.5" />
-                        <span>Copy Output</span>
+                        <Send className="w-3.5 h-3.5" />
+                        <span>Ask CampusMate</span>
                       </>
                     )}
                   </button>
                 </div>
-              )}
+
+                {error && (
+                  <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-[11px] text-red-600 font-medium">
+                    {error}
+                  </div>
+                )}
+              </div>
+
+              <div className="bg-white rounded-[24px] p-5 shadow-[0_4px_24px_rgba(70,110,170,0.05)] border border-slate-100 flex flex-col gap-3 min-h-[260px]">
+                <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+                  <div className="flex items-center gap-2">
+                    <span className="font-extrabold text-xs text-slate-800 uppercase tracking-wider">
+                      Gemma 4 Response
+                    </span>
+                    {provider && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full border font-bold bg-blue-50 border-blue-200 text-[#3c7bed]">
+                        {provider}
+                      </span>
+                    )}
+                  </div>
+
+                  {response && (
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={handleSpeak}
+                        disabled={playingVoice}
+                        className="flex items-center gap-1 text-[11px] font-semibold text-[#3c7bed] bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-lg border border-blue-200 transition-colors shadow-2xs"
+                      >
+                        <Volume2 className={`w-3.5 h-3.5 ${playingVoice ? 'animate-bounce text-blue-600' : ''}`} />
+                        <span>{playingVoice ? 'Speaking...' : 'Listen Voice'}</span>
+                      </button>
+
+                      <button
+                        onClick={handleCopy}
+                        className="flex items-center gap-1 text-[11px] font-semibold text-slate-600 hover:text-slate-900 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 border border-slate-200 transition-colors"
+                      >
+                        {copied ? (
+                          <>
+                            <Check className="w-3.5 h-3.5 text-emerald-600" />
+                            <span className="text-emerald-600">Copied!</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="w-3.5 h-3.5" />
+                            <span>Copy</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                </div>
+
+                {loading ? (
+                  <div className="flex-1 flex flex-col items-center justify-center py-10 text-center text-slate-500 gap-2">
+                    <div className="w-8 h-8 border-3 border-blue-100 border-t-[#3c7bed] rounded-full animate-spin"></div>
+                    <span className="text-xs text-slate-700 font-bold">Synthesizing instant response...</span>
+                  </div>
+                ) : response ? (
+                  <div className="flex-1 overflow-y-auto max-h-[360px] text-xs text-slate-800 leading-relaxed whitespace-pre-wrap font-sans bg-[#f8faff] p-3.5 rounded-xl border border-slate-200/80 select-text">
+                    {response}
+                  </div>
+                ) : (
+                  <div className="flex-1 flex flex-col items-center justify-center py-10 text-center text-slate-400 gap-2">
+                    <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-[#3c7bed]">
+                      <Sparkles className="w-4 h-4" />
+                    </div>
+                    <p className="text-xs text-slate-500 max-w-xs">
+                      Pick a quick demo preset above or ask anything to see Gemma 4 synthesize answers.
+                    </p>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {loading ? (
-              <div className="flex-1 flex flex-col items-center justify-center py-16 text-center text-slate-500 gap-3">
-                <div className="relative">
-                  <div className="w-10 h-10 border-4 border-purple-100 border-t-purple-600 rounded-full animate-spin"></div>
-                  <Cpu className="w-4 h-4 text-purple-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            <div className="lg:col-span-3 bg-white rounded-[24px] p-5 shadow-[0_4px_24px_rgba(70,110,170,0.05)] border border-slate-100 flex flex-col justify-between gap-4">
+              <div className="flex flex-col gap-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="font-extrabold text-sm text-slate-800">
+                    News & Updates
+                  </h3>
+                  <ArrowUpRight className="w-4 h-4 text-slate-400" />
                 </div>
-                <div className="text-xs text-slate-700 font-bold">
-                  Synthesizing instant response...
-                </div>
-                <div className="text-[11px] text-slate-400">
-                  Open-weight AI acceleration
-                </div>
-              </div>
-            ) : response ? (
-              <div className="flex-1 overflow-y-auto max-h-[500px] text-sm text-slate-800 leading-relaxed whitespace-pre-wrap font-sans bg-[#f8fafc] p-4 rounded-xl border border-slate-200/80 select-text">
-                {response}
-              </div>
-            ) : (
-              <div className="flex-1 flex flex-col items-center justify-center py-16 text-center text-slate-400 gap-2">
-                <HelpCircle className="w-9 h-9 text-slate-300" />
-                <p className="text-xs text-slate-500 max-w-sm">
-                  Select a category above, pick a demo preset or enter your query to see Gemma 4 solve campus problems.
-                </p>
-              </div>
-            )}
 
-            <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
-              <span className="flex items-center gap-1 font-medium">
-                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                Zero data tracking • 100% Open Source
-              </span>
-              <span className="font-medium text-slate-500">Official IIUC Portal Companion</span>
+                <div className="rounded-2xl overflow-hidden border border-blue-100 bg-gradient-to-br from-[#3b7ee8] via-[#5b95f5] to-[#8db8fc] p-4 text-white shadow-sm flex flex-col justify-between min-h-[140px] relative">
+                  <div className="absolute -right-4 -bottom-4 w-28 h-28 rounded-full bg-white/10 blur-sm pointer-events-none" />
+                  <div className="relative z-10 flex items-center justify-between">
+                    <span className="text-[10px] font-extrabold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full backdrop-blur-xs">
+                      Announcement
+                    </span>
+                    <span className="text-[10px] text-blue-100 font-medium">IIUC Notice</span>
+                  </div>
+                  <div className="relative z-10 mt-3">
+                    <h4 className="font-extrabold text-xs leading-snug">
+                      Kumira Campus Transport & Exam Matrix
+                    </h4>
+                    <p className="text-[10px] text-blue-100 mt-1 line-clamp-2">
+                      Pre-registration clearance and bus routines updated for all departments.
+                    </p>
+                  </div>
+                  <div className="relative z-10 mt-3">
+                    <button
+                      onClick={() => {
+                        setActiveTab('bus');
+                        handlePreset('IIUC কুমিরা ক্যাম্পাসে ফিমেল (শহর থেকে সকাল ৭:৩০, ক্যাম্পাস থেকে দুপুর ১:৪০) এবং মেল (শহর থেকে সকাল ৯:০৫, ক্যাম্পাস থেকে বিকাল ৪:৪০) স্টুডেন্টদের বাসের শিডিউল ও রুট বাংলায় বিস্তারিত জানাও।');
+                      }}
+                      className="text-[10px] font-bold bg-white text-[#3c7bed] px-3 py-1 rounded-lg shadow-xs hover:bg-blue-50 transition-colors"
+                    >
+                      Read more &gt;
+                    </button>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 transition-colors">
+                    <div className="w-7 h-7 rounded-full bg-purple-100 text-purple-700 flex items-center justify-center font-bold text-[10px] shrink-0">
+                      TD
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-[11px] text-slate-800">Transport Division</h5>
+                      <p className="text-[10px] text-slate-500 line-clamp-2 mt-0.5">
+                        Female bus leaves city at 7:30 AM, Male bus at 9:05 AM.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 transition-colors">
+                    <div className="w-7 h-7 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold text-[10px] shrink-0">
+                      AO
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-[11px] text-slate-800">Accounts Office</h5>
+                      <p className="text-[10px] text-slate-500 line-clamp-2 mt-0.5">
+                        Online fee payment clearance active via Nagad/bKash/Bank.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-2.5 p-2 rounded-xl hover:bg-slate-50 transition-colors">
+                    <div className="w-7 h-7 rounded-full bg-blue-100 text-[#3c7bed] flex items-center justify-center font-bold text-[10px] shrink-0">
+                      SAD
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-[11px] text-slate-800">Student Affairs</h5>
+                      <p className="text-[10px] text-slate-500 line-clamp-2 mt-0.5">
+                        Course add/drop window open for Autumn semester.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-slate-100 text-[10px] text-slate-400 flex items-center justify-between">
+                <span>© IIUC Kumira</span>
+                <span className="font-bold text-slate-600">Gemma 4</span>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-
-      <footer className="border-t border-slate-200/80 bg-white py-4 text-center text-xs text-slate-500">
-        <p>
-          IIUC Portal AI Companion • Built for <span className="text-purple-700 font-bold">Hacktoberfest Hack Day Chittagong (IIUC)</span> • Powered by Google Gemma 4
-        </p>
-      </footer>
+        </main>
+      </div>
     </div>
   );
 }
