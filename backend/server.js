@@ -52,13 +52,20 @@ const getSystemPrompt = (category) => {
 };
 
 app.post('/api/chat', async (req, res) => {
-  const { message, category = 'general', model = DEFAULT_MODEL, forceLocal = false } = req.body;
+  const { message, category = 'general', model = DEFAULT_MODEL, language = 'bilingual', forceLocal = false } = req.body;
 
   if (!message || message.trim() === '') {
     return res.status(400).json({ error: 'Message cannot be empty' });
   }
 
-  const systemPrompt = getSystemPrompt(category);
+  let langInstruction = 'Provide a structured response with clear English points accompanied by helpful Bangla explanations.';
+  if (language === 'bangla') {
+    langInstruction = 'STRICT LANGUAGE REQUIREMENT: You MUST respond completely in natural, conversational Bangla (বাংলায় সম্পূর্ণ উত্তর দিন). Translate and explain all concepts clearly in Bengali.';
+  } else if (language === 'english') {
+    langInstruction = 'STRICT LANGUAGE REQUIREMENT: You MUST respond completely in clear, professional English.';
+  }
+
+  const systemPrompt = `${getSystemPrompt(category)}\n\n${langInstruction}`;
   const prompt = `<start_of_turn>user\n${systemPrompt}\n\nStudent Query:\n${message}<end_of_turn>\n<start_of_turn>model\n`;
 
   if (process.env.GROQ_API_KEY && !forceLocal) {

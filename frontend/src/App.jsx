@@ -15,7 +15,8 @@ import {
   Users,
   Briefcase,
   AlertCircle,
-  Volume2
+  Volume2,
+  Languages
 } from 'lucide-react';
 
 const TABS = [
@@ -69,6 +70,10 @@ const PRESETS = {
   ],
   study: [
     {
+      title: '🇧🇩 English to Bangla Lecture Explainer',
+      text: 'Translate and explain this English engineering lecture on Operating System Deadlocks into simple conversational Bangla with real-world examples: "A deadlock happens when multiple processes are blocked because each is holding a resource and waiting for another resource held by another process."',
+    },
+    {
       title: '💻 CSE: Binary Search Tree (BST) Notes',
       text: 'Here are my lecture notes on Binary Search Trees (BST): A BST is a binary tree where left child < parent and right child > parent. Search time is O(h) where h is height, O(log n) if balanced, but degrades to O(n) in worst case (skewed tree). In-order traversal produces sorted elements. Please give me: 1. Core summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.',
     },
@@ -112,6 +117,7 @@ const PRESETS = {
 export default function App() {
   const [activeTab, setActiveTab] = useState('bus');
   const [model, setModel] = useState('gemma4:e2b');
+  const [language, setLanguage] = useState('bilingual');
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
   const [provider, setProvider] = useState('');
@@ -178,6 +184,7 @@ export default function App() {
           message: input,
           category: activeTab,
           model: model,
+          language: language,
         }),
       });
 
@@ -319,19 +326,56 @@ export default function App() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex flex-col gap-3.5">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-2.5">
+            <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-2.5 gap-2">
               <label className="text-xs font-bold text-slate-700 flex items-center gap-1.5 uppercase tracking-wider">
                 <span>Student Query / Lecture Content</span>
               </label>
-              {input && (
+
+              <div className="flex items-center gap-1.5">
                 <button
-                  onClick={handleClear}
-                  className="text-xs font-medium text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors"
+                  type="button"
+                  onClick={() => setLanguage('bilingual')}
+                  className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                    language === 'bilingual'
+                      ? 'bg-purple-600 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
                 >
-                  <RotateCcw className="w-3 h-3" />
-                  Clear
+                  🌐 EN + বাংলা
                 </button>
-              )}
+                <button
+                  type="button"
+                  onClick={() => setLanguage('bangla')}
+                  className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                    language === 'bangla'
+                      ? 'bg-emerald-600 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  🇧🇩 বাংলায়
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setLanguage('english')}
+                  className={`text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                    language === 'english'
+                      ? 'bg-blue-600 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  🇬🇧 English
+                </button>
+
+                {input && (
+                  <button
+                    onClick={handleClear}
+                    className="text-xs font-medium text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors pl-1"
+                  >
+                    <RotateCcw className="w-3 h-3" />
+                    Clear
+                  </button>
+                )}
+              </div>
             </div>
 
             <textarea
