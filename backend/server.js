@@ -64,7 +64,7 @@ app.post('/api/chat', async (req, res) => {
   // 1. Try Local Ollama first
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000); // 20s timeout
+    const timeout = setTimeout(() => controller.abort(), 90000); // 90s timeout for complete generation
 
     const ollamaRes = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
       method: 'POST',
