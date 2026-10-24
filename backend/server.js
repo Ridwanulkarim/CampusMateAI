@@ -185,42 +185,79 @@ app.post('/api/tts', async (req, res) => {
     return res.status(400).json({ error: 'Text is required' });
   }
 
-  const cleanText = text.replace(/[*#_`]/g, '').slice(0, 300);
+  const cleanText = text
+    .replace(/[*#_`~>|\\-]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 300);
 
-  if (!process.env.ELEVENLABS_API_KEY) {
-    return res.status(500).json({ error: 'ElevenLabs API key missing' });
+  const isBangla = /[\u0980-\u09FF]/.test(cleanText);
+
+  if (isBangla) {
+    try {
+      const gUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=bn&client=tw-ob&q=${encodeURIComponent(cleanText.slice(0, 200))}`;
+      const gRes = await fetch(gUrl, {
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+          'Referer': 'https://translate.google.com/'
+        }
+      });
+      if (gRes.ok) {
+        const buffer = await gRes.arrayBuffer();
+        res.set('Content-Type', 'audio/mpeg');
+        return res.send(Buffer.from(buffer));
+      }
+    } catch (gErr) {
+      console.warn('Google Bengali TTS fallback error:', gErr.message);
+    }
   }
 
-  const voiceId = gender === 'male' ? 'ErXwobaYiN019PkySvjV' : '21m00Tcm4TlvDq8ikWAM';
+  if (process.env.ELEVENLABS_API_KEY) {
+    const voiceId = gender === 'male' ? 'pNInz6obpgDQGcFmaJgB' : '21m00Tcm4TlvDq8ikWAM';
+    try {
+      const voiceRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'xi-api-key': process.env.ELEVENLABS_API_KEY,
+        },
+        body: JSON.stringify({
+          text: cleanText,
+          model_id: 'eleven_multilingual_v2',
+          voice_settings: {
+            stability: 0.5,
+            similarity_boost: 0.75,
+          },
+        }),
+      });
+
+      if (voiceRes.ok) {
+        const buffer = await voiceRes.arrayBuffer();
+        res.set('Content-Type', 'audio/mpeg');
+        return res.send(Buffer.from(buffer));
+      }
+    } catch (_) {}
+  }
 
   try {
-    const voiceRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
-      method: 'POST',
+    const lang = isBangla ? 'bn' : 'en';
+    const gUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${lang}&client=tw-ob&q=${encodeURIComponent(cleanText.slice(0, 200))}`;
+    const gRes = await fetch(gUrl, {
       headers: {
-        'Content-Type': 'application/json',
-        'xi-api-key': process.env.ELEVENLABS_API_KEY,
-      },
-      body: JSON.stringify({
-        text: cleanText,
-        model_id: 'eleven_multilingual_v2',
-        voice_settings: {
-          stability: 0.5,
-          similarity_boost: 0.75,
-        },
-      }),
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Referer': 'https://translate.google.com/'
+      }
     });
-
-    if (voiceRes.ok) {
-      const buffer = await voiceRes.arrayBuffer();
+    if (gRes.ok) {
+      const buffer = await gRes.arrayBuffer();
       res.set('Content-Type', 'audio/mpeg');
       return res.send(Buffer.from(buffer));
     }
-
-    const errData = await voiceRes.text();
-    return res.status(500).json({ error: errData });
   } catch (err) {
-    return res.status(500).json({ error: err.message });
+    console.error('TTS error:', err.message);
   }
+
+  return res.status(500).json({ error: 'TTS audio generation failed' });
 });
 
 app.get('/api/health', (req, res) => {
