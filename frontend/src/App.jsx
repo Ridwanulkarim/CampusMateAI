@@ -24,102 +24,208 @@ import {
   ChevronDown
 } from 'lucide-react';
 
-const TABS = [
-  { 
-    id: 'bus', 
-    label: 'Overview & Buses', 
-    icon: Bus, 
-    desc: 'Kumira bus timings, Agrabad/GEC/Chawkbazar routes & seat guide'
+const UI_TEXT = {
+  en: {
+    welcome: 'Welcome, Student!',
+    active: 'Active',
+    classesHeading: 'Classes for the day',
+    femaleShift: 'Female Students Shift',
+    maleShift: 'Male Students Shift',
+    transitRoutes: 'IIUC Transit Routes',
+    femaleTime: 'City: 7:30 AM • Univ: 1:40 PM',
+    maleTime: 'City: 9:05 AM • Univ: 4:40 PM',
+    femaleDesc: 'Morning departure starts at 7:30 AM from Chawkbazar, Bahaddarhat, GEC, Agrabad to Kumira. Return bus departs at 1:40 PM from Gate 2.',
+    maleDesc: 'Morning departure starts at 9:05 AM from city stops to Kumira campus. Return bus departs at 4:40 PM from Central Terminal Gate 1.',
+    queryHeading: 'Student Query / Copilot',
+    clear: 'Clear',
+    uploadPdf: 'Upload PDF',
+    uploadImg: 'Upload Image',
+    extracting: 'Extracting text...',
+    placeholder: 'Ask any campus question, click a preset, or upload PDF slides / notes photo...',
+    shiftEnter: 'Shift + Enter for new line',
+    askButton: 'Ask CampusMate',
+    processing: 'Processing...',
+    responseHeading: 'Gemma 4 Response',
+    listenVoice: 'Listen Voice',
+    speaking: 'Speaking...',
+    copy: 'Copy',
+    copied: 'Copied!',
+    synthesizing: 'Synthesizing instant response...',
+    emptyPrompt: 'Pick a quick demo preset above, upload slides/notes, or ask anything to see Gemma 4 synthesize answers.',
+    newsHeading: 'News & Updates',
+    announcement: 'Announcement',
+    noticeBadge: 'IIUC Notice',
+    bannerTitle: 'Kumira Campus Transport & Exam Matrix',
+    bannerSub: 'Pre-registration clearance and bus routines updated for all departments.',
+    readMore: 'Read more >',
+    femaleVoice: '👩 Female',
+    maleVoice: '👨 Male',
+    selectCategory: 'Select Category',
+    activeNotice: 'Active',
+    transportDivision: 'Transport Division',
+    transportNotice: 'Female bus leaves city at 7:30 AM, Male bus at 9:05 AM.',
+    accountsOffice: 'Accounts Office',
+    accountsNotice: 'Online fee payment clearance active via Nagad/bKash/Bank.',
+    studentAffairs: 'Student Affairs',
+    affairsNotice: 'Course add/drop window open for Autumn semester.',
+    tabs: [
+      { id: 'bus', label: 'Overview & Buses', icon: Bus },
+      { id: 'study', label: 'Academic & Exam', icon: BookOpen },
+      { id: 'admin', label: 'Registration & Admin', icon: Building2 },
+      { id: 'life', label: 'Student Life & Halls', icon: Users },
+      { id: 'career', label: 'Career & Roadmaps', icon: Briefcase },
+    ]
   },
-  { 
-    id: 'study', 
-    label: 'Academic & Exam', 
-    icon: BookOpen, 
-    desc: 'Lecture notes to summaries, Bangla explainer & 3 MCQs quiz'
-  },
-  { 
-    id: 'admin', 
-    label: 'Registration & Admin', 
-    icon: Building2, 
-    desc: 'Pre-registration, fee clearance, admit card & campus offices'
-  },
-  { 
-    id: 'life', 
-    label: 'Student Life & Halls', 
-    icon: Users, 
-    desc: 'Cafeteria, Kumira residential halls, clubs & lost-and-found'
-  },
-  { 
-    id: 'career', 
-    label: 'Career & Roadmaps', 
-    icon: Briefcase, 
-    desc: 'CSE, EEE, BBA skill roadmaps, CV reviews & internship tips'
-  },
-];
+  bn: {
+    welcome: 'স্বাগতম, শিক্ষার্থী!',
+    active: 'সক্রিয়',
+    classesHeading: 'আজকের বাসের সময়সূচী',
+    femaleShift: 'ফিমেল স্টুডেন্ট শিফট',
+    maleShift: 'মেল স্টুডেন্ট শিফট',
+    transitRoutes: 'আইআইইউসি বাসের রুটসমূহ',
+    femaleTime: 'শহর থেকে: ৭:৩০ AM • কুমিরা থেকে: ১:৪০ PM',
+    maleTime: 'শহর থেকে: ৯:০৫ AM • কুমিরা থেকে: ৪:৪০ PM',
+    femaleDesc: 'শহর থেকে সকাল ৭:৩০ টায় চকবাজার, বহদ্দারহাট, জিইসি ও আগ্রাবাদ থেকে কুমিরা ক্যাম্পাসের উদ্দেশ্যে ছাড়ে। কুমিরা গেট ২ থেকে দুপুর ১:৪০ টায় ফেরত ছাড়ে।',
+    maleDesc: 'শহর থেকে সকাল ৯:০৫ টায় কুমিরা ক্যাম্পাসের উদ্দেশ্যে বাস ছাড়ে। কুমিরা সেন্ট্রাল টার্মিনাল গেট ১ থেকে বিকাল ৪:৪০ টায় ফেরত ছাড়ে।',
+    queryHeading: 'শিক্ষার্থীর প্রশ্ন ও কোপাইলট',
+    clear: 'মুছুন',
+    uploadPdf: 'PDF আপলোড',
+    uploadImg: 'ছবি আপলোড',
+    extracting: 'টেক্সট পড়া হচ্ছে...',
+    placeholder: 'ক্যাম্পাস সংক্রান্ত যেকোনো প্রশ্ন বাংলায় লিখুন, প্রিসেট বাটন চাপুন অথবা লেকচার স্লাইড PDF বা খাতার নোটের ছবি আপলোড করুন...',
+    shiftEnter: 'নতুন লাইনের জন্য Shift + Enter',
+    askButton: 'ক্যাম্পাসমেটকে জিজ্ঞেস করুন',
+    processing: 'প্রসেসিং হচ্ছে...',
+    responseHeading: 'জেম্মা ৪ এর উত্তর',
+    listenVoice: 'ভয়েস শুনুন',
+    speaking: 'বলছে...',
+    copy: 'কপি',
+    copied: 'কপি হয়েছে!',
+    synthesizing: 'দ্রুত উত্তর তৈরি করা হচ্ছে...',
+    emptyPrompt: 'উপরের যেকোনো ডেমো প্রিসেটে ক্লিক করুন, স্লাইড/নোটস আপলোড করুন অথবা যেকোনো প্রশ্ন বাংলায় লিখুন।',
+    newsHeading: 'ক্যাম্পাস নোটিশ ও আপডেট',
+    announcement: 'জরুরী বিজ্ঞপ্তি',
+    noticeBadge: 'IIUC নোটিশ',
+    bannerTitle: 'কুমিরা ক্যাম্পাস পরিবহন ও পরীক্ষা সূচী',
+    bannerSub: 'সকল ডিপার্টমেন্টের জন্য কোর্স রেজিস্ট্রেশন ক্লিয়ারেন্স ও বাসের সময়সূচী আপডেট করা হয়েছে।',
+    readMore: 'বিস্তারিত দেখুন >',
+    femaleVoice: '👩 নারী কণ্ঠ',
+    maleVoice: '👨 পুরুষ কণ্ঠ',
+    selectCategory: 'ক্যাটাগরি নির্বাচন করুন',
+    activeNotice: 'সক্রিয়',
+    transportDivision: 'ট্রান্সপোর্ট ডিভিশন',
+    transportNotice: 'শহর থেকে ফিমেল বাস সকাল ৭:৩০ এবং মেল বাস সকাল ৯:০৫ টায় ছাড়ে।',
+    accountsOffice: 'অ্যাকাউন্টস অফিস',
+    accountsNotice: 'বিকাশ, নগদ ও ব্যাংকের মাধ্যমে সেমিস্টার ফি জমা নেওয়া চলছে।',
+    studentAffairs: 'স্টুডেন্ট অ্যাফেয়ার্স',
+    affairsNotice: 'শরৎকালীন সেমিস্টারের কোর্স অ্যাড/ড্রপ চলছে।',
+    tabs: [
+      { id: 'bus', label: 'বাসের সময়সূচী ও রুট', icon: Bus },
+      { id: 'study', label: 'পড়াশোনা ও পরীক্ষা প্রস্তুতি', icon: BookOpen },
+      { id: 'admin', label: 'রেজিস্ট্রেশন ও অ্যাডমিন', icon: Building2 },
+      { id: 'life', label: 'হল ও ক্যাম্পাস লাইফ', icon: Users },
+      { id: 'career', label: 'ক্যারিয়ার ও স্কিল রোডম্যাপ', icon: Briefcase },
+    ]
+  }
+};
 
 const PRESETS = {
-  bus: [
-    {
-      title: '🇧🇩 বাংলায় বাসের সময়সূচী',
-      text: 'IIUC কুমিরা ক্যাম্পাসে ফিমেল (শহর থেকে সকাল ৭:৩০, ক্যাম্পাস থেকে দুপুর ১:৪০) এবং মেল (শহর থেকে সকাল ৯:০৫, ক্যাম্পাস থেকে বিকাল ৪:৪০) স্টুডেন্টদের বাসের শিডিউল ও রুট বাংলায় বিস্তারিত জানাও।',
-    },
-    {
-      title: '🧕 Female Bus (City: 7:30 AM | Univ: 1:40 PM)',
-      text: 'What is the exact bus schedule for Female students at IIUC? (City starting departure: 7:30 AM, Kumira return departure: 1:40 PM from Gate 2)',
-    },
-    {
-      title: '👨 Male Bus (City: 9:05 AM | Univ: 4:40 PM)',
-      text: 'What is the exact bus schedule for Male students at IIUC? (City starting departure: 9:05 AM, Kumira return departure: 4:40 PM from Gate 1)',
-    },
-  ],
-  study: [
-    {
-      title: '🇧🇩 বাংলায় লেকচার নোটস ও কুইজ',
-      text: 'অপারেটিং সিস্টেমের ডেডলক (Deadlock) এর ৪টি শর্ত বাস্তব জীবনের উদাহরণ দিয়ে সহজ বাংলায় বুঝিয়ে দাও এবং আমার পরীক্ষার জন্য ৩টি প্র্যাকটিস কুইজ তৈরি করো।',
-    },
-    {
-      title: '🇧🇩 English to Bangla Lecture Explainer',
-      text: 'Translate and explain this English engineering lecture on Operating System Deadlocks into simple conversational Bangla with real-world examples: "A deadlock happens when multiple processes are blocked because each is holding a resource and waiting for another resource held by another process."',
-    },
-    {
-      title: '💻 CSE: Binary Search Tree (BST) Notes',
-      text: 'Here are my lecture notes on Binary Search Trees (BST): A BST is a binary tree where left child < parent and right child > parent. Search time is O(h) where h is height, O(log n) if balanced, but degrades to O(n) in worst case (skewed tree). In-order traversal produces sorted elements. Please give me: 1. Core summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.',
-    },
-    {
-      title: '📖 Islamic Studies: Maqasid al-Shariah',
-      text: 'Explain the core concept of Maqasid al-Shariah (the five essential objectives: preservation of faith, life, intellect, lineage, and wealth) in simple English and conversational Bangla, and generate 3 practice quiz questions for my exam.',
-    },
-  ],
-  admin: [
-    {
-      title: '💳 Semester Fee Payment & Admit Clearance',
-      text: 'How can an IIUC student pay semester tuition fees online, and what are the exact steps to get exam clearance and admit card from the accounts office?',
-    },
-    {
-      title: '🎓 Pre-Registration & Course Add/Drop Guide',
-      text: 'How does the Pre-Registration and course add/drop process work at IIUC, where is the Student Affairs Division (SAD), and what are the rules if GPA is below 2.00?',
-    },
-  ],
-  life: [
-    {
-      title: '🍲 Campus Cafeteria & Kumira Residential Halls',
-      text: 'Tell me about the central cafeteria meal timings, male and female residential halls at Kumira, and active student clubs at IIUC like Computer Club and Debating Club.',
-    },
-    {
-      title: '🔍 Lost and Found / Campus Amenities',
-      text: 'How do I report a lost student ID or notebook on campus, and where can students study quietly during exam week?',
-    },
-  ],
-  career: [
-    {
-      title: '🚀 CSE Fresher to Software Engineer Roadmap',
-      text: 'Give me a structured 4-year skill roadmap for a CSE student at IIUC to land a software engineering or AI internship by 3rd year. What tech stack and projects should I build?',
-    },
-    {
-      title: '📄 Student CV & Interview Feedback',
-      text: 'What are the top 5 mistakes university students make in their technical CVs, and how can an IIUC graduate stand out for software and IT jobs in Bangladesh?',
-    },
-  ],
+  en: {
+    bus: [
+      {
+        title: '🚌 Bus Schedules & Departure Gates',
+        text: 'What are the exact bus timings for Female students (City: 7:30 AM, Kumira: 1:40 PM from Gate 2) and Male students (City: 9:05 AM, Kumira: 4:40 PM from Gate 1) at IIUC?',
+      },
+      {
+        title: '🧕 Female Bus (City: 7:30 AM | Univ: 1:40 PM)',
+        text: 'What is the exact bus schedule for Female students at IIUC? (City starting departure: 7:30 AM, Kumira return departure: 1:40 PM from Gate 2)',
+      },
+      {
+        title: '👨 Male Bus (City: 9:05 AM | Univ: 4:40 PM)',
+        text: 'What is the exact bus schedule for Male students at IIUC? (City starting departure: 9:05 AM, Kumira return departure: 4:40 PM from Gate 1)',
+      },
+    ],
+    study: [
+      {
+        title: '💻 CSE: Binary Search Tree (BST)',
+        text: 'Here are my lecture notes on Binary Search Trees (BST): A BST is a binary tree where left child < parent and right child > parent. Search time is O(h) where h is height, O(log n) if balanced, but degrades to O(n) in worst case (skewed tree). Please give me: 1. Core summary, 2. Clear explanation with real-world examples, 3. Three practice MCQ exam questions with answers.',
+      },
+      {
+        title: '📖 Islamic Studies: Maqasid al-Shariah',
+        text: 'Explain the core concept of Maqasid al-Shariah (the five essential objectives: preservation of faith, life, intellect, lineage, and wealth) in simple English, and generate 3 practice quiz questions for my exam.',
+      },
+    ],
+    admin: [
+      {
+        title: '💳 Semester Fee Payment & Admit Clearance',
+        text: 'How can an IIUC student pay semester tuition fees online, and what are the exact steps to get exam clearance and admit card from the accounts office?',
+      },
+      {
+        title: '🎓 Pre-Registration & Course Add/Drop Guide',
+        text: 'How does the Pre-Registration and course add/drop process work at IIUC, where is the Student Affairs Division (SAD), and what are the rules if GPA is below 2.00?',
+      },
+    ],
+    life: [
+      {
+        title: '🍲 Campus Cafeteria & Kumira Residential Halls',
+        text: 'Tell me about the central cafeteria meal timings, male and female residential halls at Kumira, and active student clubs at IIUC like Computer Club and Debating Club.',
+      },
+    ],
+    career: [
+      {
+        title: '🚀 CSE Fresher to Software Engineer Roadmap',
+        text: 'Give me a structured 4-year skill roadmap for a CSE student at IIUC to land a software engineering or AI internship by 3rd year. What tech stack and projects should I build?',
+      },
+    ],
+  },
+  bn: {
+    bus: [
+      {
+        title: '🇧🇩 বাসের সম্পূর্ণ সময়সূচী ও রুট',
+        text: 'IIUC কুমিরা ক্যাম্পাসে ফিমেল (শহর থেকে সকাল ৭:৩০, ক্যাম্পাস থেকে দুপুর ১:৪০) এবং মেল (শহর থেকে সকাল ৯:০৫, ক্যাম্পাস থেকে বিকাল ৪:৪০) স্টুডেন্টদের বাসের শিডিউল ও রুট বাংলায় বিস্তারিত জানাও।',
+      },
+      {
+        title: '🧕 ফিমেল বাস (শহর: ৭:৩০ AM | ক্যাম্পাস: ১:৪০ PM)',
+        text: 'IIUC কুমিরা ক্যাম্পাসে ফিমেল শিক্ষার্থীদের বাসের সময়সূচী কী? (শহর থেকে ছাড়ার সময় সকাল ৭:৩০ এবং কুমিরা গেট ২ থেকে দুপুর ১:৪০)',
+      },
+      {
+        title: '👨 মেল বাস (শহর: ৯:০৫ AM | ক্যাম্পাস: ৪:৪০ PM)',
+        text: 'IIUC কুমিরা ক্যাম্পাসে মেল শিক্ষার্থীদের বাসের সময়সূচী কী? (শহর থেকে ছাড়ার সময় সকাল ৯:০৫ এবং কুমিরা গেট ১ থেকে বিকাল ৪:৪০)',
+      },
+    ],
+    study: [
+      {
+        title: '🇧🇩 অপারেটিং সিস্টেম ডেডলক ও কুইজ',
+        text: 'অপারেটিং সিস্টেমের ডেডলক (Deadlock) এর ৪টি শর্ত বাস্তব জীবনের উদাহরণ দিয়ে সহজ বাংলায় বুঝিয়ে দাও এবং আমার পরীক্ষার জন্য ৩টি প্র্যাকটিস কুইজ তৈরি করো।',
+      },
+      {
+        title: '💻 সিএসই: বাইনারি সার্চ ট্রি (BST)',
+        text: 'বাইনারি সার্চ ট্রি (BST) এর মূল ধারণা, ইনসার্ট ও সার্চ অ্যালগরিদম সহজ বাংলায় বুঝিয়ে দাও এবং পরীক্ষার জন্য ৩টি প্র্যাকটিস প্রশ্ন ও উত্তর দাও।',
+      },
+    ],
+    admin: [
+      {
+        title: '💳 সেমিস্টার ফি পেমেন্ট ও অ্যাডমিট কার্ড',
+        text: 'আইআইইউসি-তে কীভাবে অনলাইনে সেমিস্টার ফি দেওয়া যায় এবং অ্যাকাউন্টস অফিস থেকে ক্লিয়ারেন্স ও অ্যাডমিট কার্ড নেওয়ার নিয়ম কী?',
+      },
+      {
+        title: '🎓 প্রি-রেজিস্ট্রেশন ও কোর্স ড্রপ',
+        text: 'আইআইইউসিতে কোর্স প্রি-রেজিস্ট্রেশন এবং অ্যাড/ড্রপ করার পুরো প্রসেস বাংলায় বুঝিয়ে বলো।',
+      },
+    ],
+    life: [
+      {
+        title: '🍲 ক্যাফেটেরিয়া ও কুমিরা হল লাইফ',
+        text: 'কুমিরা ক্যাম্পাসের সেন্ট্রাল ক্যাফেটেরিয়ার খাবারের সময় এবং মেল ও ফিমেল আবাসিক হলের সুযোগ-সুবিধা জানাও।',
+      },
+    ],
+    career: [
+      {
+        title: '🚀 সিএসই ৪ বছরের ক্যারিয়ার রোডম্যাপ',
+        text: 'আইআইইউসি-তে একজন সিএসই স্টুডেন্টের সফটওয়্যার ইঞ্জিনিয়ারিং বা এআই ফিল্ডে ভালো করার ৪ বছরের পূর্ণাঙ্গ স্কিল রোডম্যাপ দাও।',
+      },
+    ],
+  }
 };
 
 export default function App() {
@@ -142,7 +248,11 @@ export default function App() {
   const pdfInputRef = useRef(null);
   const imageInputRef = useRef(null);
 
-  const currentTab = TABS.find((t) => t.id === activeTab) || TABS[0];
+  const isBn = language === 'bangla';
+  const t = isBn ? UI_TEXT.bn : UI_TEXT.en;
+  const presetsList = isBn ? PRESETS.bn : PRESETS.en;
+
+  const currentTab = t.tabs.find((tab) => tab.id === activeTab) || t.tabs[0];
   const CurrentIcon = currentTab.icon;
 
   const handleFileUpload = async (e, type) => {
@@ -178,7 +288,9 @@ export default function App() {
           pages: data.pages,
         });
 
-        const promptText = `Here are my lecture notes from "${file.name}":\n\n${data.text || 'Document content attached.'}\n\nPlease provide: 1. Core summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.`;
+        const promptText = isBn
+          ? `এখানে আমার লেকচার নোট দেওয়া হলো ("${file.name}"):\n\n${data.text || 'ফাইল সংযুক্ত করা হয়েছে।'}\n\nঅনুগ্রহ করে: ১. মূল সারসংক্ষেপ, ২. সহজ বাংলা ব্যাখ্যা, ৩. পরীক্ষার জন্য ৩টি প্র্যাকটিস কুইজ প্রশ্ন ও উত্তর দাও।`
+          : `Here are my lecture notes from "${file.name}":\n\n${data.text || 'Document content attached.'}\n\nPlease provide: 1. Core summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.`;
         setInput(promptText);
       } catch (err) {
         console.error(err);
@@ -344,7 +456,7 @@ export default function App() {
           </div>
 
           <nav className="flex flex-col gap-1">
-            {TABS.map((tab) => {
+            {t.tabs.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
               return (
@@ -409,10 +521,10 @@ export default function App() {
               />
               <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl p-2 shadow-xl border border-slate-200 z-50 flex flex-col gap-1 animate-in fade-in slide-in-from-top-2 duration-150">
                 <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 flex items-center justify-between">
-                  <span>Select Category</span>
+                  <span>{t.selectCategory}</span>
                   <span>5 Modules</span>
                 </div>
-                {TABS.map((tab) => {
+                {t.tabs.map((tab) => {
                   const Icon = tab.icon;
                   const isActive = activeTab === tab.id;
                   return (
@@ -446,10 +558,10 @@ export default function App() {
           <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
             <div className="hidden lg:flex items-center gap-2.5">
               <h1 className="text-xl sm:text-2xl font-extrabold text-slate-800 tracking-tight">
-                Welcome, Student!
+                {t.welcome}
               </h1>
               <span className="bg-[#22c55e] text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-2xs">
-                Active
+                {t.active}
               </span>
             </div>
 
@@ -470,7 +582,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setLanguage('auto')}
-                  className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                  className={`text-[10px] sm:text-[11px] px-2.5 py-1 rounded-lg font-bold transition-all ${
                     language === 'auto'
                       ? 'bg-[#3c7bed] text-white shadow-2xs'
                       : 'text-slate-600 hover:bg-slate-100'
@@ -481,9 +593,9 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setLanguage('bangla')}
-                  className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                  className={`text-[10px] sm:text-[11px] px-2.5 py-1 rounded-lg font-bold transition-all ${
                     language === 'bangla'
-                      ? 'bg-[#22c55e] text-white shadow-2xs'
+                      ? 'bg-[#22c55e] text-white shadow-2xs scale-102'
                       : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
@@ -492,13 +604,13 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setLanguage('english')}
-                  className={`text-[10px] sm:text-[11px] px-2 py-0.5 rounded-lg font-semibold transition-all ${
+                  className={`text-[10px] sm:text-[11px] px-2.5 py-1 rounded-lg font-bold transition-all ${
                     language === 'english'
-                      ? 'bg-slate-800 text-white shadow-2xs'
+                      ? 'bg-slate-800 text-white shadow-2xs scale-102'
                       : 'text-slate-600 hover:bg-slate-100'
                   }`}
                 >
-                  🇬🇧 EN
+                  🇬🇧 English
                 </button>
               </div>
 
@@ -512,7 +624,7 @@ export default function App() {
             <div className="lg:col-span-4 bg-white rounded-2xl sm:rounded-[20px] p-3 sm:p-3.5 shadow-xs border border-slate-100 flex flex-col gap-2.5">
               <div className="flex items-center justify-between">
                 <h3 className="font-extrabold text-xs text-slate-800">
-                  Classes for the day
+                  {t.classesHeading}
                 </h3>
                 <div className="flex items-center gap-1 text-slate-400">
                   <Search className="w-3 h-3" />
@@ -524,7 +636,7 @@ export default function App() {
                 <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-xl p-2.5 sm:p-3 transition-colors">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-slate-900">
-                      Female Students Shift
+                      {t.femaleShift}
                     </span>
                     <span className="text-[10px] bg-blue-100 text-[#3c7bed] font-bold px-2 py-0.5 rounded-full">
                       Gate 2
@@ -532,17 +644,17 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-1.5 text-slate-400 text-[10px] mt-1 font-medium">
                     <Clock className="w-3 h-3 text-[#3c7bed]" />
-                    <span>City: 7:30 AM • Univ: 1:40 PM</span>
+                    <span>{t.femaleTime}</span>
                   </div>
                   <p className="text-[11px] text-slate-600 mt-1.5 leading-relaxed">
-                    Morning departure starts at 7:30 AM from Chawkbazar, Bahaddarhat, GEC, Agrabad to Kumira. Return bus departs at 1:40 PM from Gate 2.
+                    {t.femaleDesc}
                   </p>
                 </div>
 
                 <div className="bg-[#f8faff] hover:bg-[#f0f5fd] border border-blue-100/70 rounded-xl p-2.5 sm:p-3 transition-colors">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-slate-900">
-                      Male Students Shift
+                      {t.maleShift}
                     </span>
                     <span className="text-[10px] bg-indigo-100 text-indigo-700 font-bold px-2 py-0.5 rounded-full">
                       Gate 1
@@ -550,20 +662,20 @@ export default function App() {
                   </div>
                   <div className="flex items-center gap-1.5 text-slate-400 text-[10px] mt-1 font-medium">
                     <Clock className="w-3 h-3 text-indigo-600" />
-                    <span>City: 9:05 AM • Univ: 4:40 PM</span>
+                    <span>{t.maleTime}</span>
                   </div>
                   <p className="text-[11px] text-slate-600 mt-1.5 leading-relaxed">
-                    Morning departure starts at 9:05 AM from city stops to Kumira campus. Return bus departs at 4:40 PM from Central Terminal Gate 1.
+                    {t.maleDesc}
                   </p>
                 </div>
 
                 <div className="bg-[#f8faff] border border-slate-100 rounded-xl p-2.5 sm:p-3">
                   <div className="flex items-center justify-between">
                     <span className="font-bold text-xs text-slate-900">
-                      IIUC Transit Routes
+                      {t.transitRoutes}
                     </span>
                     <span className="text-[9px] bg-emerald-100 text-emerald-700 font-bold px-1.5 py-0.5 rounded-full">
-                      Active
+                      {t.activeNotice}
                     </span>
                   </div>
                   <div className="flex flex-wrap gap-1 mt-1.5">
@@ -586,7 +698,7 @@ export default function App() {
                   <div className="flex items-center gap-1.5">
                     <Sparkles className="w-3.5 h-3.5 text-[#3c7bed]" />
                     <span className="font-extrabold text-xs text-slate-800 uppercase tracking-wider">
-                      Student Query / Copilot
+                      {t.queryHeading}
                     </span>
                   </div>
                   {input && (
@@ -595,13 +707,13 @@ export default function App() {
                       className="text-[10px] font-semibold text-slate-400 hover:text-slate-600 flex items-center gap-1 transition-colors"
                     >
                       <RotateCcw className="w-3 h-3" />
-                      Clear
+                      {t.clear}
                     </button>
                   )}
                 </div>
 
                 <div className="flex flex-wrap gap-1">
-                  {PRESETS[activeTab]?.map((p, idx) => (
+                  {presetsList[activeTab]?.map((p, idx) => (
                     <button
                       key={idx}
                       onClick={() => handlePreset(p.text)}
@@ -635,7 +747,7 @@ export default function App() {
                     className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2.5 py-1 rounded-lg transition-colors shadow-2xs"
                   >
                     <FileText className="w-3 h-3 text-red-500" />
-                    <span>Upload PDF</span>
+                    <span>{t.uploadPdf}</span>
                   </button>
 
                   <button
@@ -645,13 +757,13 @@ export default function App() {
                     className="flex items-center gap-1 text-[10px] font-semibold text-slate-600 hover:text-[#3c7bed] bg-[#f8faff] hover:bg-blue-50 border border-slate-200/90 px-2.5 py-1 rounded-lg transition-colors shadow-2xs"
                   >
                     <Image className="w-3 h-3 text-blue-500" />
-                    <span>Upload Image</span>
+                    <span>{t.uploadImg}</span>
                   </button>
 
                   {uploadingFile && (
                     <span className="flex items-center gap-1 text-[10px] text-[#3c7bed] font-bold animate-pulse">
                       <Loader2 className="w-3 h-3 animate-spin" />
-                      <span>Extracting text...</span>
+                      <span>{t.extracting}</span>
                     </span>
                   )}
 
@@ -672,14 +784,14 @@ export default function App() {
                 <textarea
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder="Ask any campus question, click a preset, or upload PDF slides / notes photo..."
+                  placeholder={t.placeholder}
                   rows={3}
                   className="w-full bg-[#f8faff] border border-slate-200/90 rounded-xl p-2.5 text-sm sm:text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#3c7bed] focus:ring-2 focus:ring-[#3c7bed]/15 transition-all font-sans leading-relaxed"
                 />
 
                 <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-0.5">
                   <span className="text-[10px] text-slate-400 font-medium hidden sm:inline">
-                    Shift + Enter for new line
+                    {t.shiftEnter}
                   </span>
 
                   <button
@@ -694,12 +806,12 @@ export default function App() {
                     {loading ? (
                       <>
                         <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        <span>Processing...</span>
+                        <span>{t.processing}</span>
                       </>
                     ) : (
                       <>
                         <Send className="w-3 h-3" />
-                        <span>Ask CampusMate</span>
+                        <span>{t.askButton}</span>
                       </>
                     )}
                   </button>
@@ -716,7 +828,7 @@ export default function App() {
                 <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-2 gap-2">
                   <div className="flex items-center gap-2">
                     <span className="font-extrabold text-xs text-slate-800 uppercase tracking-wider">
-                      Gemma 4 Response
+                      {t.responseHeading}
                     </span>
                     {provider && (
                       <span className="text-[9px] px-2 py-0.5 rounded-full border font-bold bg-blue-50 border-blue-200 text-[#3c7bed]">
@@ -737,7 +849,7 @@ export default function App() {
                               : 'text-slate-500 hover:text-slate-700'
                           }`}
                         >
-                          👩 Female
+                          {t.femaleVoice}
                         </button>
                         <button
                           type="button"
@@ -748,7 +860,7 @@ export default function App() {
                               : 'text-slate-500 hover:text-slate-700'
                           }`}
                         >
-                          👨 Male
+                          {t.maleVoice}
                         </button>
                       </div>
 
@@ -758,7 +870,7 @@ export default function App() {
                         className="flex items-center gap-1 text-[11px] font-semibold text-[#3c7bed] bg-blue-50 hover:bg-blue-100 px-2.5 py-1 rounded-lg border border-blue-200 transition-colors shadow-2xs"
                       >
                         <Volume2 className={`w-3.5 h-3.5 ${playingVoice ? 'animate-bounce text-blue-600' : ''}`} />
-                        <span>{playingVoice ? 'Speaking...' : 'Listen Voice'}</span>
+                        <span>{playingVoice ? t.speaking : t.listenVoice}</span>
                       </button>
 
                       <button
@@ -768,12 +880,12 @@ export default function App() {
                         {copied ? (
                           <>
                             <Check className="w-3 h-3 text-emerald-600" />
-                            <span className="text-emerald-600">Copied!</span>
+                            <span className="text-emerald-600">{t.copied}</span>
                           </>
                         ) : (
                           <>
                             <Copy className="w-3 h-3" />
-                            <span>Copy</span>
+                            <span>{t.copy}</span>
                           </>
                         )}
                       </button>
@@ -784,7 +896,7 @@ export default function App() {
                 {loading ? (
                   <div className="flex-1 flex flex-col items-center justify-center py-6 text-center text-slate-500 gap-2">
                     <div className="w-7 h-7 border-3 border-blue-100 border-t-[#3c7bed] rounded-full animate-spin"></div>
-                    <span className="text-xs text-slate-700 font-bold">Synthesizing instant response...</span>
+                    <span className="text-xs text-slate-700 font-bold">{t.synthesizing}</span>
                   </div>
                 ) : response ? (
                   <div className="flex-1 overflow-y-auto max-h-[350px] text-xs text-slate-800 leading-relaxed whitespace-pre-wrap font-sans bg-[#f8faff] p-3 rounded-xl border border-slate-200/80 select-text">
@@ -796,7 +908,7 @@ export default function App() {
                       <Sparkles className="w-3.5 h-3.5" />
                     </div>
                     <p className="text-xs text-slate-500 max-w-xs">
-                      Pick a quick demo preset above, upload slides/notes, or ask anything to see Gemma 4 synthesize answers.
+                      {t.emptyPrompt}
                     </p>
                   </div>
                 )}
@@ -807,7 +919,7 @@ export default function App() {
               <div className="flex flex-col gap-2.5">
                 <div className="flex items-center justify-between">
                   <h3 className="font-extrabold text-xs text-slate-800">
-                    News & Updates
+                    {t.newsHeading}
                   </h3>
                   <ArrowUpRight className="w-3.5 h-3.5 text-slate-400" />
                 </div>
@@ -816,27 +928,30 @@ export default function App() {
                   <div className="absolute -right-4 -bottom-4 w-24 h-24 rounded-full bg-white/10 blur-sm pointer-events-none" />
                   <div className="relative z-10 flex items-center justify-between">
                     <span className="text-[9px] font-extrabold uppercase tracking-wider bg-white/20 px-2 py-0.5 rounded-full backdrop-blur-xs">
-                      Announcement
+                      {t.announcement}
                     </span>
-                    <span className="text-[9px] text-blue-100 font-medium">IIUC Notice</span>
+                    <span className="text-[9px] text-blue-100 font-medium">{t.noticeBadge}</span>
                   </div>
                   <div className="relative z-10 mt-2">
                     <h4 className="font-extrabold text-xs leading-snug">
-                      Kumira Campus Transport & Exam Matrix
+                      {t.bannerTitle}
                     </h4>
                     <p className="text-[10px] text-blue-100 mt-0.5 line-clamp-2">
-                      Pre-registration clearance and bus routines updated for all departments.
+                      {t.bannerSub}
                     </p>
                   </div>
                   <div className="relative z-10 mt-2">
                     <button
                       onClick={() => {
                         setActiveTab('bus');
-                        handlePreset('IIUC কুমিরা ক্যাম্পাসে ফিমেল (শহর থেকে সকাল ৭:৩০, ক্যাম্পাস থেকে দুপুর ১:৪০) এবং মেল (শহর থেকে সকাল ৯:০৫, ক্যাম্পাস থেকে বিকাল ৪:৪০) স্টুডেন্টদের বাসের শিডিউল ও রুট বাংলায় বিস্তারিত জানাও।');
+                        handlePreset(isBn 
+                          ? 'IIUC কুমিরা ক্যাম্পাসে ফিমেল (শহর থেকে সকাল ৭:৩০, ক্যাম্পাস থেকে দুপুর ১:৪০) এবং মেল (শহর থেকে সকাল ৯:০৫, ক্যাম্পাস থেকে বিকাল ৪:৪০) স্টুডেন্টদের বাসের শিডিউল ও রুট বাংলায় বিস্তারিত জানাও।'
+                          : 'What are the exact bus timings for Female students (City: 7:30 AM, Kumira: 1:40 PM from Gate 2) and Male students (City: 9:05 AM, Kumira: 4:40 PM from Gate 1) at IIUC?'
+                        );
                       }}
                       className="text-[10px] font-bold bg-white text-[#3c7bed] px-2.5 py-0.5 rounded-md shadow-xs hover:bg-blue-50 transition-colors"
                     >
-                      Read more &gt;
+                      {t.readMore}
                     </button>
                   </div>
                 </div>
@@ -847,9 +962,9 @@ export default function App() {
                       TD
                     </div>
                     <div>
-                      <h5 className="font-bold text-[11px] text-slate-800">Transport Division</h5>
+                      <h5 className="font-bold text-[11px] text-slate-800">{t.transportDivision}</h5>
                       <p className="text-[10px] text-slate-500 line-clamp-2">
-                        Female bus leaves city at 7:30 AM, Male bus at 9:05 AM.
+                        {t.transportNotice}
                       </p>
                     </div>
                   </div>
@@ -859,9 +974,9 @@ export default function App() {
                       AO
                     </div>
                     <div>
-                      <h5 className="font-bold text-[11px] text-slate-800">Accounts Office</h5>
+                      <h5 className="font-bold text-[11px] text-slate-800">{t.accountsOffice}</h5>
                       <p className="text-[10px] text-slate-500 line-clamp-2">
-                        Online fee payment clearance active via Nagad/bKash/Bank.
+                        {t.accountsNotice}
                       </p>
                     </div>
                   </div>
@@ -871,9 +986,9 @@ export default function App() {
                       SAD
                     </div>
                     <div>
-                      <h5 className="font-bold text-[11px] text-slate-800">Student Affairs</h5>
+                      <h5 className="font-bold text-[11px] text-slate-800">{t.studentAffairs}</h5>
                       <p className="text-[10px] text-slate-500 line-clamp-2">
-                        Course add/drop window open for Autumn semester.
+                        {t.affairsNotice}
                       </p>
                     </div>
                   </div>
