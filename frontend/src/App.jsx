@@ -283,15 +283,6 @@ export default function App() {
               })}
             </nav>
           </div>
-
-          <div className="pt-2">
-            <button
-              onClick={() => setActiveTab('bus')}
-              className="w-full bg-[#4f8cf6] hover:bg-[#3b7ee8] text-white text-xs font-bold py-2.5 px-4 rounded-xl shadow-xs transition-colors text-center"
-            >
-              Sign Out
-            </button>
-          </div>
         </aside>
 
         <main className="flex-1 flex flex-col gap-5 min-w-0">
