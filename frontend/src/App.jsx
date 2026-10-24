@@ -14,7 +14,8 @@ import {
   ShieldCheck,
   Users,
   Briefcase,
-  AlertCircle
+  AlertCircle,
+  Volume2
 } from 'lucide-react';
 
 const TABS = [
@@ -117,7 +118,32 @@ export default function App() {
   const [isLocal, setIsLocal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [playingVoice, setPlayingVoice] = useState(false);
   const [error, setError] = useState('');
+
+  const handleSpeak = async () => {
+    if (!response || playingVoice) return;
+    setPlayingVoice(true);
+    try {
+      const res = await fetch('/api/tts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: response }),
+      });
+      if (res.ok) {
+        const blob = await res.blob();
+        const audioUrl = URL.createObjectURL(blob);
+        const audio = new Audio(audioUrl);
+        audio.onended = () => setPlayingVoice(false);
+        audio.onerror = () => setPlayingVoice(false);
+        await audio.play();
+      } else {
+        setPlayingVoice(false);
+      }
+    } catch (_) {
+      setPlayingVoice(false);
+    }
+  };
 
   const handlePreset = (text) => {
     setInput(text);
@@ -365,22 +391,33 @@ export default function App() {
               </div>
 
               {response && (
-                <button
-                  onClick={handleCopy}
-                  className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-purple-700 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-purple-50 border border-slate-200 transition-colors"
-                >
-                  {copied ? (
-                    <>
-                      <Check className="w-3.5 h-3.5 text-emerald-600" />
-                      <span className="text-emerald-600">Copied!</span>
-                    </>
-                  ) : (
-                    <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copy Output</span>
-                    </>
-                  )}
-                </button>
+                <div className="flex items-center gap-1.5">
+                  <button
+                    onClick={handleSpeak}
+                    disabled={playingVoice}
+                    className="flex items-center gap-1.5 text-xs font-semibold text-purple-700 bg-purple-50 hover:bg-purple-100 px-2.5 py-1 rounded-lg border border-purple-200 transition-colors shadow-2xs"
+                  >
+                    <Volume2 className={`w-3.5 h-3.5 ${playingVoice ? 'animate-bounce text-fuchsia-600' : ''}`} />
+                    <span>{playingVoice ? 'Speaking...' : 'Listen Voice'}</span>
+                  </button>
+
+                  <button
+                    onClick={handleCopy}
+                    className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-purple-700 px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-purple-50 border border-slate-200 transition-colors"
+                  >
+                    {copied ? (
+                      <>
+                        <Check className="w-3.5 h-3.5 text-emerald-600" />
+                        <span className="text-emerald-600">Copied!</span>
+                      </>
+                    ) : (
+                      <>
+                        <Copy className="w-3.5 h-3.5" />
+                        <span>Copy Output</span>
+                      </>
+                    )}
+                  </button>
+                </div>
               )}
             </div>
 

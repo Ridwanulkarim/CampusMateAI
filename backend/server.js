@@ -124,6 +124,48 @@ app.post('/api/chat', async (req, res) => {
   });
 });
 
+app.post('/api/tts', async (req, res) => {
+  const { text } = req.body;
+  if (!text) {
+    return res.status(400).json({ error: 'Text is required' });
+  }
+
+  const cleanText = text.replace(/[*#_`]/g, '').slice(0, 300);
+
+  if (!process.env.ELEVENLABS_API_KEY) {
+    return res.status(500).json({ error: 'ElevenLabs API key missing' });
+  }
+
+  try {
+    const voiceRes = await fetch('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'xi-api-key': process.env.ELEVENLABS_API_KEY,
+      },
+      body: JSON.stringify({
+        text: cleanText,
+        model_id: 'eleven_multilingual_v2',
+        voice_settings: {
+          stability: 0.5,
+          similarity_boost: 0.75,
+        },
+      }),
+    });
+
+    if (voiceRes.ok) {
+      const buffer = await voiceRes.arrayBuffer();
+      res.set('Content-Type', 'audio/mpeg');
+      return res.send(Buffer.from(buffer));
+    }
+
+    const errData = await voiceRes.text();
+    return res.status(500).json({ error: errData });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/health', (req, res) => {
   res.json({
     status: 'ok',
