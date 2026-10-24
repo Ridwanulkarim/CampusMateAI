@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply bg-slate-950 text-slate-100;
+    @apply bg-[#f8fafc] text-slate-800;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 }
