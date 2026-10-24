@@ -9,7 +9,31 @@ app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
-const pdfParse = require('pdf-parse');
+const parsePdfBuffer = async (buffer) => {
+  const pdfModule = require('pdf-parse');
+  if (pdfModule && pdfModule.PDFParse) {
+    const parser = new pdfModule.PDFParse({ data: buffer });
+    try {
+      const result = await parser.getText();
+      return {
+        text: result.text ? result.text.trim() : '',
+        pages: result.total || 1,
+      };
+    } finally {
+      if (typeof parser.destroy === 'function') {
+        await parser.destroy();
+      }
+    }
+  }
+  if (typeof pdfModule === 'function') {
+    const result = await pdfModule(buffer);
+    return {
+      text: result.text ? result.text.trim() : '',
+      pages: result.numpages || 1,
+    };
+  }
+  throw new Error('Unsupported pdf-parse version');
+};
 let Tesseract;
 try {
   Tesseract = require('tesseract.js');
@@ -160,10 +184,10 @@ app.post(['/api/extract-file', '/extract-file'], async (req, res) => {
     if (fileType === 'pdf' || (fileName && fileName.toLowerCase().endsWith('.pdf'))) {
       const cleanBase64 = base64.replace(/^data:application\/pdf;base64,/, '');
       const buffer = Buffer.from(cleanBase64, 'base64');
-      const pdfData = await pdfParse(buffer);
+      const pdfData = await parsePdfBuffer(buffer);
       return res.json({
         text: pdfData.text ? pdfData.text.trim() : '',
-        pages: pdfData.numpages || 1,
+        pages: pdfData.pages || 1,
         type: 'pdf',
         fileName: fileName || 'document.pdf',
       });
