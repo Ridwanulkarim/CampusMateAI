@@ -10,7 +10,12 @@ app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 const pdfParse = require('pdf-parse');
-const Tesseract = require('tesseract.js');
+let Tesseract;
+try {
+  Tesseract = require('tesseract.js');
+} catch (e) {
+  Tesseract = null;
+}
 
 const PORT = process.env.PORT || 5001;
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434';
@@ -59,7 +64,7 @@ const getSystemPrompt = (category, isBangla) => {
   return `${CAMPUS_CONTEXT}\nHelp the student with their campus query concisely.`;
 };
 
-app.post('/api/chat', async (req, res) => {
+app.post(['/api/chat', '/chat'], async (req, res) => {
   const { message, category = 'general', model = DEFAULT_MODEL, language = 'auto', forceLocal = false } = req.body;
 
   if (!message || message.trim() === '') {
@@ -145,7 +150,7 @@ app.post('/api/chat', async (req, res) => {
   });
 });
 
-app.post('/api/extract-file', async (req, res) => {
+app.post(['/api/extract-file', '/extract-file'], async (req, res) => {
   const { base64, fileType, fileName } = req.body;
   if (!base64) {
     return res.status(400).json({ error: 'No file data received' });
@@ -165,6 +170,9 @@ app.post('/api/extract-file', async (req, res) => {
     }
 
     if (fileType === 'image' || (fileName && /\.(png|jpe?g|webp|bmp)$/i.test(fileName))) {
+      if (!Tesseract) {
+        return res.status(503).json({ error: 'Image OCR is currently active in local mode on your host machine.' });
+      }
       const cleanBase64 = base64.replace(/^data:image\/\w+;base64,/, '');
       const buffer = Buffer.from(cleanBase64, 'base64');
       const { data: { text } } = await Tesseract.recognize(buffer, 'eng');
@@ -182,7 +190,7 @@ app.post('/api/extract-file', async (req, res) => {
   }
 });
 
-app.post('/api/tts', async (req, res) => {
+app.post(['/api/tts', '/tts'], async (req, res) => {
   const { text, gender = 'female' } = req.body;
   if (!text) {
     return res.status(400).json({ error: 'Text is required' });
@@ -263,7 +271,7 @@ app.post('/api/tts', async (req, res) => {
   return res.status(500).json({ error: 'TTS audio generation failed' });
 });
 
-app.get('/api/health', (req, res) => {
+app.get(['/api/health', '/health'], (req, res) => {
   res.json({
     status: 'ok',
     app: 'CampusMate AI',
@@ -285,6 +293,10 @@ app.get('*', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 CampusMate AI backend listening on http://localhost:${PORT}`);
-});
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`🚀 CampusMate AI backend listening on http://localhost:${PORT}`);
+  });
+}
+
+module.exports = app;
