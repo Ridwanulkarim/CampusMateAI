@@ -373,7 +373,7 @@ export default function App() {
                   Gemma 4 is synthesizing your query...
                 </div>
                 <div className="text-[11px] text-slate-400">
-                  Local edge inference on Apple Silicon
+                  Local on-device inference on MacBook Pro
                 </div>
               </div>
             ) : response ? (

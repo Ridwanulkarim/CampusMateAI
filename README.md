@@ -24,7 +24,7 @@ The application runs **100% locally and offline on user laptops using Gemma 4**,
 ## How it works
 
 ### Model(s) Used
-- **Primary Model (On-Device Local Inference):** [Google Gemma 4:e2b](https://ollama.com/library/gemma) & [Gemma 4:12b](https://ollama.com/library/gemma) running locally via **Ollama** on Apple Silicon (`http://localhost:11434`).
+- **Primary Model (On-Device Local Inference):** [Google Gemma 4:e2b](https://ollama.com/library/gemma) & [Gemma 4:12b](https://ollama.com/library/gemma) running locally via **Ollama** on MacBook Pro (`http://localhost:11434`).
 - **Cloud Fallback (Production Hosted Inference):** [Gemma 2 9B IT](https://huggingface.co/google/gemma-2-9b-it) hosted on Groq for 100% public uptime on web deployment.
 
 ### Tech Stack
