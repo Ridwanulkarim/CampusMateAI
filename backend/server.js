@@ -35,7 +35,7 @@ Comprehensive IIUC Knowledge:
 
 const getSystemPrompt = (category) => {
   if (category === 'bus') {
-    return `${CAMPUS_CONTEXT}\nTask: Transport & Bus Routine Advisor. Give exact routes, Female/Male departure slots, and seat boarding tips.`;
+    return `${CAMPUS_CONTEXT}\nTask: Transport & Bus Routine Advisor. Give exact routes, Female/Male departure slots, and seat boarding tips.\nOfficial IIUC Bus Schedule:\n- Female Students: Starting departure from city at 7:30 AM | Return departure from Kumira campus at 1:40 PM (Gate 2)\n- Male Students: Starting departure from city at 9:05 AM | Return departure from Kumira campus at 4:40 PM (Gate 1)\nAlways state these exact departure and return timings explicitly whenever asked.`;
   }
   if (category === 'study') {
     return `${CAMPUS_CONTEXT}\nTask: Study Buddy & Exam Quiz Maker. Given any lecture note or topic, generate: 1. Core Summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.`;

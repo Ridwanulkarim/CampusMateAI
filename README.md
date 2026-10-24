@@ -14,6 +14,8 @@ Students at International Islamic University Chittagong (IIUC) face recurring fr
 ## The solution
 **CampusMate AI** is an open-source web application designed specifically for university students. It solves three critical campus pillars:
 - 🚌 **IIUC Bus & Transit Navigator:** Instant lookup for city-to-Kumira schedules, boarding gates, and delay management tips.
+  - **Female Students Shift:** Starts from city at 7:30 AM | Return departure from Kumira campus at 1:40 PM (Dedicated Gate 2 zone).
+  - **Male Students Shift:** Starts from city at 9:05 AM | Return departure from Kumira campus at 4:40 PM (Central Terminal Gate 1).
 - 📚 **Lecture-to-Quiz & Bangla Explainer:** Ingests lecture notes/slides and instantly synthesizes core summaries, simple conversational Bangla explanations, and 3 practice MCQ exam questions with solutions.
 - 🏛️ **Admin & Freshers Guide:** Step-by-step guidance on course registration, semester fees, and campus office navigation.
 
@@ -34,7 +36,10 @@ The application runs **100% locally and offline on user laptops using Gemma 4**,
 - **License:** OSI-Approved MIT License
 
 ### Datasets & Knowledge Grounding
-- IIUC Campus bus schedule matrix (Kumira <-> Chittagong city routes: Chawkbazar, GEC, Bahaddarhat, Agrabad, Oxygen).
+- Official IIUC Campus bus schedule matrix:
+  - Female students: 7:30 AM starting departure from city, 1:40 PM return departure from Kumira campus (Gate 2).
+  - Male students: 9:05 AM starting departure from city, 4:40 PM return departure from Kumira campus (Gate 1).
+  - Routes: Chawkbazar, GEC Circle, Bahaddarhat, Agrabad, Oxygen, Badamtoli, AK Khan, Bhatiary to Kumira.
 - IIUC academic administration procedures & department directory.
 
 ---

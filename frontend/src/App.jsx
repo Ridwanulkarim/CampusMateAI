@@ -341,6 +341,50 @@ export default function App() {
           </div>
         </div>
 
+        {activeTab === 'bus' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="bg-gradient-to-r from-fuchsia-500/10 via-purple-500/10 to-pink-500/10 border border-fuchsia-200/90 rounded-2xl p-4 shadow-xs flex items-center justify-between">
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-fuchsia-600 to-purple-600 flex items-center justify-center text-white text-lg font-bold shadow-xs">
+                  🧕
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-extrabold text-sm text-slate-900">Female Students Shift</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-fuchsia-100 text-fuchsia-700 border border-fuchsia-200">
+                      Gate 2
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-700 mt-1 font-medium flex flex-wrap gap-x-3 gap-y-0.5">
+                    <span>🏙️ <strong className="text-slate-900">From City:</strong> 7:30 AM (Starting)</span>
+                    <span>🏛️ <strong className="text-slate-900">From University:</strong> 1:40 PM (Return)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-gradient-to-r from-indigo-500/10 via-purple-500/10 to-blue-500/10 border border-indigo-200/90 rounded-2xl p-4 shadow-xs flex items-center justify-between">
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white text-lg font-bold shadow-xs">
+                  👨
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <span className="font-extrabold text-sm text-slate-900">Male Students Shift</span>
+                    <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-700 border border-indigo-200">
+                      Gate 1
+                    </span>
+                  </div>
+                  <div className="text-xs text-slate-700 mt-1 font-medium flex flex-wrap gap-x-3 gap-y-0.5">
+                    <span>🏙️ <strong className="text-slate-900">From City:</strong> 9:05 AM (Starting)</span>
+                    <span>🏛️ <strong className="text-slate-900">From University:</strong> 4:40 PM (Return)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
           <div className="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs flex flex-col gap-3.5">
             <div className="flex flex-wrap items-center justify-between border-b border-slate-100 pb-2.5 gap-2">
