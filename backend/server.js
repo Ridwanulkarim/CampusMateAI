@@ -14,7 +14,7 @@ const DEFAULT_MODEL = process.env.OLLAMA_MODEL || 'gemma4:e2b';
 
 const CAMPUS_CONTEXT = `
 You are CampusMate AI, the official all-in-one AI companion for students at IIUC (International Islamic University Chittagong) in Kumira, Sitakunda, Chattogram.
-Respond concisely, helpfully, and with high accuracy in English and conversational Bangla.
+Respond concisely, helpfully, and with high accuracy. Strictly match the language of the student's question: if asked in Bangla, answer 100% in natural Bengali; if asked in English, answer 100% in clear English.
 
 Comprehensive IIUC Knowledge:
 1. Transport & Buses:
@@ -23,7 +23,7 @@ Comprehensive IIUC Knowledge:
    - Male Bus Shift: Morning starting departure from city at 9:05 AM. Return departure from Kumira university campus at 4:40 PM (Central Terminal / Gate 1).
 2. Studying & Classes:
    - Departments: CSE, EEE, Pharmacy, BBA, Law, English, Arabic & Islamic Studies.
-   - Summarize slides, explain complex technical or theological concepts in Bangla, generate 3 practice MCQs.
+   - Summarize slides, explain complex technical or theological concepts clearly, generate 3 practice MCQs.
 3. Admin & Paperwork:
    - Pre-registration on IIUC Portal, Tuition fee payment via Nagad/bKash/Bank, Accounts clearance for Admit Card.
    - Minimum GPA 2.00 rule, Student Affairs Division (SAD) for ID cards, Central Library clearance.
@@ -33,12 +33,15 @@ Comprehensive IIUC Knowledge:
    - Department-specific skill roadmaps (CSE Software Engineering / AI, Pharmacy clinical/industrial, BBA finance/marketing), CV optimization, interview preparation.
 `;
 
-const getSystemPrompt = (category) => {
+const getSystemPrompt = (category, isBangla) => {
   if (category === 'bus') {
     return `${CAMPUS_CONTEXT}\nTask: Transport & Bus Routine Advisor. Give exact routes, Female/Male departure slots, and seat boarding tips.\nOfficial IIUC Bus Schedule:\n- Female Students: Starting departure from city at 7:30 AM | Return departure from Kumira campus at 1:40 PM (Gate 2)\n- Male Students: Starting departure from city at 9:05 AM | Return departure from Kumira campus at 4:40 PM (Gate 1)\nAlways state these exact departure and return timings explicitly whenever asked.`;
   }
   if (category === 'study') {
-    return `${CAMPUS_CONTEXT}\nTask: Study Buddy & Exam Quiz Maker. Given any lecture note or topic, generate: 1. Core Summary, 2. Easy Bangla explanation, 3. Three practice MCQ exam questions with answers.`;
+    if (isBangla) {
+      return `${CAMPUS_CONTEXT}\nTask: Study Buddy & Exam Quiz Maker. Given any lecture note or topic, generate: ১. মূল সারসংক্ষেপ (Summary), ২. সহজ ও প্রাঞ্জল বাংলা ব্যাখ্যা (Bangla Explanation), ৩. ৩টি প্র্যাকটিস কুইজ প্রশ্ন ও উত্তর (3 Practice MCQs with Answers)।`;
+    }
+    return `${CAMPUS_CONTEXT}\nTask: Study Buddy & Exam Quiz Maker. Given any lecture note or topic, generate: 1. Core Summary, 2. Clear explanation with real-world examples, 3. Three practice MCQ exam questions with answers.`;
   }
   if (category === 'admin') {
     return `${CAMPUS_CONTEXT}\nTask: Admin & Clearance Guide. Provide step-by-step guidance on pre-registration, fee payments, and campus offices.`;
@@ -53,23 +56,23 @@ const getSystemPrompt = (category) => {
 };
 
 app.post('/api/chat', async (req, res) => {
-  const { message, category = 'general', model = DEFAULT_MODEL, language = 'bilingual', forceLocal = false } = req.body;
+  const { message, category = 'general', model = DEFAULT_MODEL, language = 'auto', forceLocal = false } = req.body;
 
   if (!message || message.trim() === '') {
     return res.status(400).json({ error: 'Message cannot be empty' });
   }
 
   const hasBanglaText = /[\u0980-\u09FF]/.test(message);
-  const isBangla = language === 'bangla' || hasBanglaText;
+  const isBangla = language === 'bangla' || (language !== 'english' && hasBanglaText);
 
-  let langInstruction = 'Provide a structured response with clear English points accompanied by helpful Bangla explanations.';
+  let langInstruction = '';
   if (isBangla) {
-    langInstruction = 'CRITICAL MANDATORY INSTRUCTION: You MUST write your entire response strictly in BENGALI (বাংলা ভাষায়). Do not output English text. Every sentence, bullet point, heading, and explanation MUST be in natural, fluent Bangla (সম্পূর্ণ উত্তর বাংলায় লিখুন)।';
-  } else if (language === 'english') {
-    langInstruction = 'CRITICAL MANDATORY INSTRUCTION: You MUST write your entire response strictly in clear English.';
+    langInstruction = 'CRITICAL LANGUAGE DIRECTIVE: The student asked in Bangla. You MUST write your entire response strictly in BENGALI (বাংলা ভাষায়). Do not output English sentences or English explanations. Every heading, point, and explanation must be in natural, fluent Bangla (সম্পূর্ণ উত্তর বাংলায় লিখুন)।';
+  } else {
+    langInstruction = 'CRITICAL LANGUAGE DIRECTIVE: The student asked in English. You MUST write your entire response strictly in clear, fluent ENGLISH. Do not output Bengali text unless specifically requested to translate.';
   }
 
-  const systemPrompt = `${getSystemPrompt(category)}\n\n${langInstruction}`;
+  const systemPrompt = `${getSystemPrompt(category, isBangla)}\n\n${langInstruction}`;
   const prompt = `<start_of_turn>user\n${systemPrompt}\n\nStudent Query:\n${message}<end_of_turn>\n<start_of_turn>model\n`;
 
   if (process.env.GROQ_API_KEY && !forceLocal) {
@@ -136,7 +139,7 @@ app.post('/api/chat', async (req, res) => {
 });
 
 app.post('/api/tts', async (req, res) => {
-  const { text } = req.body;
+  const { text, gender = 'female' } = req.body;
   if (!text) {
     return res.status(400).json({ error: 'Text is required' });
   }
@@ -147,8 +150,10 @@ app.post('/api/tts', async (req, res) => {
     return res.status(500).json({ error: 'ElevenLabs API key missing' });
   }
 
+  const voiceId = gender === 'male' ? 'ErXwobaYiN019PkySvjV' : '21m00Tcm4TlvDq8ikWAM';
+
   try {
-    const voiceRes = await fetch('https://api.elevenlabs.io/v1/text-to-speech/21m00Tcm4TlvDq8ikWAM', {
+    const voiceRes = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
