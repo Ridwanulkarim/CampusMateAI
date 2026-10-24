@@ -43,12 +43,12 @@ const TABS = [
 const PRESETS = {
   bus: [
     {
-      title: '🚌 Morning City to Kumira Bus Times',
-      text: 'What are the morning bus departure schedules from Agrabad, Chawkbazar, GEC, and Bahaddarhat to Kumira campus? What time should I reach the stand to get a seat?',
+      title: '🧕 Female Students Bus Schedule & Gates',
+      text: 'What are the exact morning departure and afternoon return bus schedules for Female students at IIUC? Which gate at Kumira campus do female buses depart from?',
     },
     {
-      title: '🚏 Afternoon Return Buses to City',
-      text: 'When do the afternoon return buses leave Kumira for Chittagong city? Please list the departure slots and which gate male and female students board from.',
+      title: '👨 Male Students Bus Schedule & Gates',
+      text: 'What are the morning departure times from city points (Agrabad, Chawkbazar, GEC) and afternoon return schedules for Male students at IIUC?',
     },
   ],
   study: [

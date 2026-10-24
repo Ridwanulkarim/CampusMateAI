@@ -17,10 +17,13 @@ Communicate clearly in English and natural conversational Bangla.
 
 Campus Facts:
 - International Islamic University Chittagong (IIUC) is at Kumira, Sitakunda, Chattogram.
-- Campus Buses: Run between Chittagong city and Kumira campus. Routes: Chawkbazar, GEC Circle, Bahaddarhat, Agrabad, Oxygen, Badamtoli, AK Khan, Bhatiary to Kumira.
-- Morning departures from city: 7:00 AM, 7:30 AM, 8:15 AM, 9:00 AM, 10:00 AM.
-- Afternoon return from Kumira: 1:30 PM, 2:30 PM, 3:45 PM, 4:45 PM, 5:30 PM.
-- Male and female students have designated bus boarding points.
+- Campus Buses: Run between Chittagong city and Kumira campus across Chawkbazar, GEC Circle, Bahaddarhat, Agrabad, Oxygen, Badamtoli, AK Khan, Bhatiary.
+- Female Students Bus Shift:
+  * Morning departure from city: 6:45 AM, 7:15 AM, 7:45 AM.
+  * Return departure from Kumira: 1:15 PM, 1:45 PM, 2:15 PM (Dedicated Female Zone / Gate 2).
+- Male Students Bus Shift:
+  * Morning departure from city: 8:00 AM, 8:30 AM, 9:15 AM, 10:00 AM.
+  * Return departure from Kumira: 3:30 PM, 4:30 PM, 5:15 PM, 5:45 PM (Central Terminal / Gate 1).
 - Academics: CSE, EEE, Pharmacy, BBA, Law, English, Arabic & Islamic Studies.
 - Admin Offices: Controller of Examinations, Student Affairs Division (SAD), Accounts Office, Central Library.
 `;
