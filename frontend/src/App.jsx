@@ -13,7 +13,6 @@ import {
   Briefcase, 
   Volume2, 
   Search, 
-  Bell, 
   SlidersHorizontal,
   ArrowUpRight,
   Clock,
@@ -348,15 +347,6 @@ export default function App() {
               <button className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 shadow-2xs transition-colors">
                 <Search className="w-3.5 h-3.5" />
               </button>
-
-              <button className="w-8 h-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:text-slate-900 shadow-2xs transition-colors relative">
-                <Bell className="w-3.5 h-3.5" />
-                <span className="w-2 h-2 rounded-full bg-[#22c55e] absolute top-1 right-1"></span>
-              </button>
-
-              <div className="w-8 h-8 rounded-full bg-[#3c7bed] text-white flex items-center justify-center font-bold text-xs shadow-2xs">
-                RK
-              </div>
             </div>
           </header>
 
