@@ -59,12 +59,12 @@ const TABS = [
 const PRESETS = {
   bus: [
     {
-      title: '🧕 Female Students Bus Schedule & Gates',
-      text: 'What are the exact morning departure and afternoon return bus schedules for Female students at IIUC? Which gate at Kumira campus do female buses depart from?',
+      title: '🧕 Female Bus Schedule (3:00 PM Return)',
+      text: 'Female students classes at IIUC end at 3:00 PM. What are the exact morning departures and 3:00 PM afternoon return bus schedules from Kumira Gate 2?',
     },
     {
-      title: '👨 Male Students Bus Schedule (After 3 PM)',
-      text: 'What are the morning departure times from city points (Agrabad, Chawkbazar, GEC) and afternoon return schedules (after classes end at 3:00 PM) for Male students at IIUC?',
+      title: '👨 Male Students Bus Schedule & Routes',
+      text: 'What are the morning departure times from city points (Agrabad, Chawkbazar, GEC) and afternoon return bus schedules for Male students at IIUC?',
     },
   ],
   study: [
