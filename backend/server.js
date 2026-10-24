@@ -23,7 +23,7 @@ Campus Facts:
   * Return departure from Kumira: 1:15 PM, 1:45 PM, 2:15 PM (Dedicated Female Zone / Gate 2).
 - Male Students Bus Shift:
   * Morning departure from city: 8:00 AM, 8:30 AM, 9:15 AM, 10:00 AM.
-  * Return departure from Kumira: 3:30 PM, 4:30 PM, 5:15 PM, 5:45 PM (Central Terminal / Gate 1).
+  * Return departure from Kumira (Classes end at 3:00 PM): 3:00 PM, 3:45 PM, 4:30 PM, 5:15 PM (Central Terminal / Gate 1).
 - Academics: CSE, EEE, Pharmacy, BBA, Law, English, Arabic & Islamic Studies.
 - Admin Offices: Controller of Examinations, Student Affairs Division (SAD), Accounts Office, Central Library.
 `;
