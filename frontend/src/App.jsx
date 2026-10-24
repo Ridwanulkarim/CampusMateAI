@@ -12,7 +12,8 @@ import {
   GraduationCap, 
   HelpCircle,
   ShieldCheck,
-  Calendar,
+  Users,
+  Briefcase,
   AlertCircle
 } from 'lucide-react';
 
@@ -38,6 +39,20 @@ const TABS = [
     desc: 'Pre-registration, fee clearance, admit card & campus offices',
     color: 'from-emerald-600 to-teal-600'
   },
+  { 
+    id: 'life', 
+    label: 'Student Life & Halls', 
+    icon: Users, 
+    desc: 'Cafeteria, Kumira residential halls, clubs & lost-and-found',
+    color: 'from-amber-600 to-orange-600'
+  },
+  { 
+    id: 'career', 
+    label: 'Career & Roadmaps', 
+    icon: Briefcase, 
+    desc: 'CSE, EEE, BBA skill roadmaps, CV reviews & internship tips',
+    color: 'from-rose-600 to-pink-600'
+  },
 ];
 
 const PRESETS = {
@@ -47,8 +62,8 @@ const PRESETS = {
       text: 'What are the exact morning departure and afternoon return bus schedules for Female students at IIUC? Which gate at Kumira campus do female buses depart from?',
     },
     {
-      title: '👨 Male Students Bus Schedule & Gates',
-      text: 'What are the morning departure times from city points (Agrabad, Chawkbazar, GEC) and afternoon return schedules for Male students at IIUC?',
+      title: '👨 Male Students Bus Schedule (After 3 PM)',
+      text: 'What are the morning departure times from city points (Agrabad, Chawkbazar, GEC) and afternoon return schedules (after classes end at 3:00 PM) for Male students at IIUC?',
     },
   ],
   study: [
@@ -71,6 +86,26 @@ const PRESETS = {
       text: 'How does the Pre-Registration and course add/drop process work at IIUC, where is the Student Affairs Division (SAD), and what are the rules if GPA is below 2.00?',
     },
   ],
+  life: [
+    {
+      title: '🍲 Campus Cafeteria & Kumira Residential Halls',
+      text: 'Tell me about the central cafeteria meal timings, male and female residential halls at Kumira, and active student clubs at IIUC like Computer Club and Debating Club.',
+    },
+    {
+      title: '🔍 Lost and Found / Campus Amenities',
+      text: 'How do I report a lost student ID or notebook on campus, and where can students study quietly during exam week?',
+    },
+  ],
+  career: [
+    {
+      title: '🚀 CSE Fresher to Software Engineer Roadmap',
+      text: 'Give me a structured 4-year skill roadmap for a CSE student at IIUC to land a software engineering or AI internship by 3rd year. What tech stack and projects should I build?',
+    },
+    {
+      title: '📄 Student CV & Interview Feedback',
+      text: 'What are the top 5 mistakes university students make in their technical CVs, and how can an IIUC graduate stand out for software and IT jobs in Bangladesh?',
+    },
+  ],
 };
 
 export default function App() {
@@ -79,12 +114,10 @@ export default function App() {
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
   const [provider, setProvider] = useState('');
-  const [isLocal, setIsLocal] = useState(true);
+  const [isLocal, setIsLocal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
   const [error, setError] = useState('');
-
-  const currentTabObj = TABS.find(t => t.id === activeTab);
 
   const handlePreset = (text) => {
     setInput(text);
@@ -137,10 +170,10 @@ export default function App() {
       const data = await res.json();
       setResponse(data.reply);
       setProvider(data.provider || 'Gemma 4');
-      setIsLocal(data.isLocal ?? true);
+      setIsLocal(data.isLocal ?? false);
     } catch (err) {
       console.error(err);
-      setError(err.message || 'Failed to connect to backend server. Make sure Ollama or backend is running.');
+      setError(err.message || 'Failed to connect to backend server. Make sure backend is running.');
     } finally {
       setLoading(false);
     }
@@ -170,7 +203,7 @@ export default function App() {
           <div className="flex items-center gap-3">
             <div className="hidden md:flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-semibold">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>Gemma 4 Local Engine</span>
+              <span>Gemma 4 AI Engine</span>
             </div>
 
             <div className="flex items-center gap-2 bg-slate-100/90 border border-slate-200/90 rounded-xl px-2.5 py-1 text-slate-700">
@@ -193,7 +226,7 @@ export default function App() {
           <div className="flex items-center gap-2.5">
             <AlertCircle className="w-5 h-5 shrink-0" />
             <p className="text-xs md:text-sm font-semibold">
-              IIUC Portal AI Assistant is active for Spring/Autumn Semester. Get instant answers for Kumira bus routines, lecture notes to quiz, and registration clearance.
+              IIUC Portal AI Companion covers all 5 student pillars: Buses, Study Quizzes, Pre-Registration, Halls & Career Roadmaps.
             </p>
           </div>
           <span className="hidden sm:inline-block shrink-0 text-xs bg-white/20 px-2.5 py-1 rounded-lg font-medium backdrop-blur-xs">
@@ -201,7 +234,7 @@ export default function App() {
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {TABS.map((tab) => {
             const Icon = tab.icon;
             const isActive = activeTab === tab.id;
@@ -212,26 +245,26 @@ export default function App() {
                   setActiveTab(tab.id);
                   setError('');
                 }}
-                className={`flex items-start gap-3.5 p-4 rounded-2xl border transition-all text-left shadow-xs ${
+                className={`flex flex-col items-start gap-2.5 p-3.5 rounded-2xl border transition-all text-left shadow-xs ${
                   isActive
                     ? 'bg-white border-purple-400/80 shadow-md shadow-purple-500/10 ring-2 ring-purple-500/20'
                     : 'bg-white/80 border-slate-200/90 hover:bg-white hover:border-slate-300 text-slate-600'
                 }`}
               >
                 <div
-                  className={`p-2.5 rounded-xl ${
+                  className={`p-2 rounded-xl ${
                     isActive
                       ? `bg-gradient-to-r ${tab.color} text-white shadow-sm`
                       : 'bg-slate-100 text-slate-500'
                   }`}
                 >
-                  <Icon className="w-5 h-5" />
+                  <Icon className="w-4 h-4" />
                 </div>
                 <div>
-                  <h3 className={`font-bold text-sm ${isActive ? 'text-slate-900' : 'text-slate-700'}`}>
+                  <h3 className={`font-bold text-xs ${isActive ? 'text-slate-900' : 'text-slate-700'}`}>
                     {tab.label}
                   </h3>
-                  <p className="text-xs text-slate-500 mt-0.5 leading-relaxed">
+                  <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-2 leading-tight">
                     {tab.desc}
                   </p>
                 </div>
@@ -246,7 +279,7 @@ export default function App() {
             Quick Demo Presets:
           </span>
           <div className="flex flex-wrap gap-2">
-            {PRESETS[activeTab].map((p, idx) => (
+            {PRESETS[activeTab]?.map((p, idx) => (
               <button
                 key={idx}
                 onClick={() => handlePreset(p.text)}
@@ -278,13 +311,7 @@ export default function App() {
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder={
-                activeTab === 'bus'
-                  ? 'Ask about Kumira bus times, routes from Agrabad/Chawkbazar/GEC/Bahaddarhat, or return schedules...'
-                  : activeTab === 'study'
-                  ? 'Paste lecture slide text, formula, or complex topic to get summary, Bangla explanation & MCQs...'
-                  : 'Ask about course pre-registration, fee clearance, office locations at IIUC...'
-              }
+              placeholder="Ask anything or click a preset button above to see instant answers..."
               rows={11}
               className="w-full bg-[#f8fafc] border border-slate-200 rounded-xl p-3.5 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/15 transition-all font-sans leading-relaxed"
             />
@@ -331,13 +358,7 @@ export default function App() {
                   Gemma 4 Synthesis & Response
                 </span>
                 {provider && (
-                  <span
-                    className={`text-[11px] px-2.5 py-0.5 rounded-full border font-semibold ${
-                      isLocal
-                        ? 'bg-purple-50 border-purple-200 text-purple-700'
-                        : 'bg-blue-50 border-blue-200 text-blue-700'
-                    }`}
-                  >
+                  <span className="text-[11px] px-2.5 py-0.5 rounded-full border font-semibold bg-purple-50 border-purple-200 text-purple-700">
                     {provider}
                   </span>
                 )}
@@ -370,10 +391,10 @@ export default function App() {
                   <Cpu className="w-4 h-4 text-purple-600 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
                 </div>
                 <div className="text-xs text-slate-700 font-bold">
-                  Gemma 4 is synthesizing your query...
+                  Synthesizing instant response...
                 </div>
                 <div className="text-[11px] text-slate-400">
-                  Local on-device inference on MacBook Pro
+                  Open-weight AI acceleration
                 </div>
               </div>
             ) : response ? (
