@@ -10,7 +10,6 @@ import {
   Send, 
   Cpu, 
   GraduationCap, 
-  Clock, 
   HelpCircle,
   ShieldCheck
 } from 'lucide-react';
@@ -120,7 +119,6 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
-      {/* Top Navbar */}
       <header className="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-3">
@@ -140,7 +138,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Model Switcher & Status Badge */}
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-950/40 border border-emerald-500/20 text-emerald-400 text-xs">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -166,10 +163,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* Main Container */}
       <main className="flex-1 max-w-6xl mx-auto w-full px-4 py-6 flex flex-col gap-6">
-        
-        {/* Category Tabs */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {TABS.map((tab) => {
             const Icon = tab.icon;
@@ -209,7 +203,6 @@ export default function App() {
           })}
         </div>
 
-        {/* Quick Presets Bar */}
         <div className="bg-slate-900/30 border border-slate-800/60 rounded-xl p-3 flex flex-wrap items-center gap-2">
           <span className="text-xs font-medium text-slate-400 flex items-center gap-1.5 pl-1">
             <Sparkles className="w-3.5 h-3.5 text-emerald-400" />
@@ -228,10 +221,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Workspace: Input & Output Columns */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
-          
-          {/* Left Column: Input Form */}
           <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3">
             <div className="flex items-center justify-between">
               <label className="text-xs font-semibold text-slate-300 flex items-center gap-1.5">
@@ -297,7 +287,6 @@ export default function App() {
             )}
           </div>
 
-          {/* Right Column: Output Card */}
           <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-4 flex flex-col gap-3 min-h-[350px]">
             <div className="flex items-center justify-between border-b border-slate-800/80 pb-2.5">
               <div className="flex items-center gap-2">
@@ -335,7 +324,6 @@ export default function App() {
               )}
             </div>
 
-            {/* Response Content or Placeholder */}
             {loading ? (
               <div className="flex-1 flex flex-col items-center justify-center py-16 text-center text-slate-400 gap-3">
                 <div className="relative">
@@ -362,7 +350,6 @@ export default function App() {
               </div>
             )}
 
-            {/* Trust Footer inside card */}
             <div className="pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px] text-slate-500">
               <span className="flex items-center gap-1">
                 <ShieldCheck className="w-3.5 h-3.5 text-emerald-500/70" />
@@ -374,7 +361,6 @@ export default function App() {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="border-t border-slate-900 py-4 text-center text-xs text-slate-500">
         <p>
           CampusMate AI • Built for <span className="text-slate-400 font-medium">Hacktoberfest Hack Day Chittagong (IIUC)</span> • Powered by Google Gemma 4

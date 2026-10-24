@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -10,7 +11,6 @@ const PORT = process.env.PORT || 5001;
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
 const DEFAULT_MODEL = process.env.OLLAMA_MODEL || 'gemma4:e2b';
 
-// Campus Knowledge Base context for IIUC
 const CAMPUS_CONTEXT = `
 You are CampusMate AI, an intelligent, empathetic campus assistant for university students at IIUC (International Islamic University Chittagong) in Kumira, Chattogram.
 You communicate clearly, warmly, and helpfully in both English and natural conversational Bangla.
@@ -61,10 +61,9 @@ app.post('/api/chat', async (req, res) => {
   const systemPrompt = getSystemPrompt(category);
   const prompt = `<start_of_turn>user\n${systemPrompt}\n\nStudent Query:\n${message}<end_of_turn>\n<start_of_turn>model\n`;
 
-  // 1. Try Local Ollama first
   try {
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 90000); // 90s timeout for complete generation
+    const timeout = setTimeout(() => controller.abort(), 90000);
 
     const ollamaRes = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
       method: 'POST',
@@ -88,13 +87,11 @@ app.post('/api/chat', async (req, res) => {
       });
     }
   } catch (err) {
-    console.warn('Local Ollama unavailable or timed out:', err.message);
+    console.warn('Local inference fallback trigger:', err.message);
   }
 
-  // 2. Cloud Fallback (Groq running open-weight Gemma)
   if (process.env.GROQ_API_KEY) {
     try {
-      console.log('Attempting hosted open-weight fallback via Groq...');
       const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
@@ -120,7 +117,7 @@ app.post('/api/chat', async (req, res) => {
         });
       }
     } catch (groqErr) {
-      console.error('Groq fallback error:', groqErr.message);
+      console.error('Inference error:', groqErr.message);
     }
   }
 
@@ -138,9 +135,6 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-const path = require('path');
-
-// Serve static frontend build if available
 const frontendDist = path.join(__dirname, '../frontend/dist');
 app.use(express.static(frontendDist));
 
@@ -148,7 +142,7 @@ app.get('*', (req, res) => {
   if (!req.path.startsWith('/api')) {
     res.sendFile(path.join(frontendDist, 'index.html'), (err) => {
       if (err) {
-        res.status(200).send('CampusMate AI API is running. Build frontend or run dev server.');
+        res.status(200).send('CampusMate AI API is running.');
       }
     });
   }
