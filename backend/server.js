@@ -8,47 +8,47 @@ app.use(cors());
 app.use(express.json());
 
 const PORT = process.env.PORT || 5001;
-const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://localhost:11434';
+const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || 'http://127.0.0.1:11434';
 const DEFAULT_MODEL = process.env.OLLAMA_MODEL || 'gemma4:e2b';
 
 const CAMPUS_CONTEXT = `
-You are CampusMate AI, an intelligent, empathetic campus assistant for university students at IIUC (International Islamic University Chittagong) in Kumira, Chattogram.
-You communicate clearly, warmly, and helpfully in both English and natural conversational Bangla.
+You are CampusMate AI, an intelligent campus assistant for university students at IIUC (International Islamic University Chittagong) in Kumira, Chattogram.
+Communicate clearly in English and natural conversational Bangla.
 
-Campus Facts to use:
-- University: International Islamic University Chittagong (IIUC) located at Kumira, Sitakunda, Chattogram.
-- Campus Transport: University student buses run between Chattogram city and Kumira campus. Major routes: Chawkbazar, GEC Circle, Bahaddarhat, Agrabad, Oxygen, Badamtoli, AK Khan, Bhatiary to Kumira.
-- Morning departure times from city: 7:00 AM, 7:30 AM, 8:15 AM, 9:00 AM, 10:00 AM.
-- Afternoon return buses from Kumira: 1:30 PM, 2:30 PM, 3:45 PM, 4:45 PM, 5:30 PM.
-- Female and male buses have designated schedules and gates.
-- Academics: Departments include CSE, EEE, Pharmacy, BBA, Law, English, Arabic & Islamic Studies (Quranic Sciences, Hadith, Dawah).
-- Admin & Offices: Controller of Examinations, Student Affairs Division (SAD), Accounts/Finance office, Central Library.
+Campus Facts:
+- International Islamic University Chittagong (IIUC) is at Kumira, Sitakunda, Chattogram.
+- Campus Buses: Run between Chittagong city and Kumira campus. Routes: Chawkbazar, GEC Circle, Bahaddarhat, Agrabad, Oxygen, Badamtoli, AK Khan, Bhatiary to Kumira.
+- Morning departures from city: 7:00 AM, 7:30 AM, 8:15 AM, 9:00 AM, 10:00 AM.
+- Afternoon return from Kumira: 1:30 PM, 2:30 PM, 3:45 PM, 4:45 PM, 5:30 PM.
+- Male and female students have designated bus boarding points.
+- Academics: CSE, EEE, Pharmacy, BBA, Law, English, Arabic & Islamic Studies.
+- Admin Offices: Controller of Examinations, Student Affairs Division (SAD), Accounts Office, Central Library.
 `;
 
 const getSystemPrompt = (category) => {
   if (category === 'bus') {
     return `${CAMPUS_CONTEXT}
-Specific Task: Transport & Bus Schedule Assistance.
-Guide students on bus timings, route points, peak rush advice, and directions to/from Kumira campus. Respond with clear bullet points. Include both English & practical Bangla tips.`;
+Task: Transport & Bus Schedule Assistance.
+Guide students on bus timings, route points, rush hours, and directions between city and Kumira campus in concise bullet points.`;
   }
 
   if (category === 'study') {
     return `${CAMPUS_CONTEXT}
-Specific Task: Study Buddy & Exam Prep Generator.
-Given lecture notes, slide text, or a course topic, generate:
-1. 📖 **Core Summary** (Key takeaways in 3-4 bullet points)
-2. 💡 **Easy Explanation in বাংলা** (Simple real-world analogy in Bangla)
-3. 🎯 **Practice Quiz (3 MCQs)** with options (A, B, C, D), correct answer, and 1-line explanation.`;
+Task: Study Buddy & Exam Prep.
+Given lecture notes or topic, generate:
+1. 📖 Core Summary (3 bullet points)
+2. 💡 Easy Explanation in বাংলা
+3. 🎯 3 Practice Quiz Questions (MCQs) with answers and 1-line reason.`;
   }
 
   if (category === 'admin') {
     return `${CAMPUS_CONTEXT}
-Specific Task: Admin, Fees & Campus Guide.
-Help students with course registration steps, semester fee payments, admit card clearance, library cards, and knowing which office handles what. Provide actionable step-by-step guidance.`;
+Task: Admin, Fees & Campus Guide.
+Guide students on registration, semester fee clearance, admit cards, and office locations step-by-step.`;
   }
 
   return `${CAMPUS_CONTEXT}
-Help the student with their campus life, study routine, or general queries accurately and concisely.`;
+Help the student with their campus query concisely.`;
 };
 
 app.post('/api/chat', async (req, res) => {
@@ -62,9 +62,6 @@ app.post('/api/chat', async (req, res) => {
   const prompt = `<start_of_turn>user\n${systemPrompt}\n\nStudent Query:\n${message}<end_of_turn>\n<start_of_turn>model\n`;
 
   try {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 90000);
-
     const ollamaRes = await fetch(`${OLLAMA_BASE_URL}/api/generate`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -72,11 +69,11 @@ app.post('/api/chat', async (req, res) => {
         model: model,
         prompt: prompt,
         stream: false,
+        options: {
+          num_predict: 800,
+        },
       }),
-      signal: controller.signal,
     });
-
-    clearTimeout(timeout);
 
     if (ollamaRes.ok) {
       const data = await ollamaRes.json();
@@ -87,7 +84,7 @@ app.post('/api/chat', async (req, res) => {
       });
     }
   } catch (err) {
-    console.warn('Local inference fallback trigger:', err.message);
+    console.warn('Local Ollama fallback:', err.message);
   }
 
   if (process.env.GROQ_API_KEY) {
@@ -99,12 +96,13 @@ app.post('/api/chat', async (req, res) => {
           'Authorization': `Bearer ${process.env.GROQ_API_KEY}`,
         },
         body: JSON.stringify({
-          model: 'gemma2-9b-it',
+          model: 'openai/gpt-oss-20b',
           messages: [
             { role: 'system', content: systemPrompt },
             { role: 'user', content: message },
           ],
-          temperature: 0.7,
+          temperature: 0.6,
+          max_tokens: 600,
         }),
       });
 
@@ -112,12 +110,12 @@ app.post('/api/chat', async (req, res) => {
         const groqData = await groqRes.json();
         return res.json({
           reply: groqData.choices[0].message.content,
-          provider: 'Hosted Open-Weight (Gemma 2 via Groq)',
+          provider: 'Hosted Open-Weight (GPT-OSS-20B via Groq)',
           isLocal: false,
         });
       }
     } catch (groqErr) {
-      console.error('Inference error:', groqErr.message);
+      console.error('Groq inference error:', groqErr.message);
     }
   }
 
