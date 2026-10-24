@@ -143,10 +143,19 @@ export default function App() {
         audio.onended = () => setPlayingVoice(false);
         audio.onerror = () => setPlayingVoice(false);
         await audio.play();
-      } else {
-        setPlayingVoice(false);
+        return;
       }
-    } catch (_) {
+    } catch (_) {}
+
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+      const cleanText = response.replace(/[*#_`]/g, '').slice(0, 400);
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.rate = 1.0;
+      utterance.onend = () => setPlayingVoice(false);
+      utterance.onerror = () => setPlayingVoice(false);
+      window.speechSynthesis.speak(utterance);
+    } else {
       setPlayingVoice(false);
     }
   };
