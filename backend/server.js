@@ -67,17 +67,20 @@ app.post('/api/chat', async (req, res) => {
   }
 
   const hasBanglaText = /[\u0980-\u09FF]/.test(message);
-  const isBangla = language === 'bangla' || (language !== 'english' && hasBanglaText);
+  const isBangla = language === 'bangla' || hasBanglaText;
 
   let langInstruction = '';
   if (isBangla) {
-    langInstruction = 'CRITICAL LANGUAGE DIRECTIVE: The student asked in Bangla. You MUST write your entire response strictly in BENGALI (বাংলা ভাষায়). Do not output English sentences or English explanations. Every heading, point, and explanation must be in natural, fluent Bangla (সম্পূর্ণ উত্তর বাংলায় লিখুন)।';
+    langInstruction = 'CRITICAL LANGUAGE DIRECTIVE: You MUST write your entire response strictly in BENGALI (বাংলা ভাষায়). Every word, sentence, heading, bullet point, and explanation must be in pure, fluent Bangla (সম্পূর্ণ উত্তর বাংলায় লিখুন)। Even if the student query is written in English or Banglish, you MUST formulate your entire response in fluent Bengali.';
   } else {
-    langInstruction = 'CRITICAL LANGUAGE DIRECTIVE: The student asked in English. You MUST write your entire response strictly in clear, fluent ENGLISH. Do not output Bengali text unless specifically requested to translate.';
+    langInstruction = 'CRITICAL LANGUAGE DIRECTIVE: You MUST write your entire response strictly in clear, fluent ENGLISH. Do not output Bengali text unless specifically requested to translate.';
   }
 
   const systemPrompt = `${getSystemPrompt(category, isBangla)}\n\n${langInstruction}`;
-  const prompt = `<start_of_turn>user\n${systemPrompt}\n\nStudent Query:\n${message}<end_of_turn>\n<start_of_turn>model\n`;
+  const userContent = isBangla
+    ? `${message}\n\n(CRITICAL: Provide the complete response 100% in fluent Bengali / সম্পূর্ণ উত্তর বাংলায় দিন)`
+    : `${message}\n\n(CRITICAL: Provide the complete response 100% in fluent English)`;
+  const prompt = `<start_of_turn>user\n${systemPrompt}\n\nStudent Query:\n${userContent}<end_of_turn>\n<start_of_turn>model\n`;
 
   if (process.env.GROQ_API_KEY && !forceLocal) {
     try {
@@ -91,7 +94,7 @@ app.post('/api/chat', async (req, res) => {
           model: 'openai/gpt-oss-20b',
           messages: [
             { role: 'system', content: systemPrompt },
-            { role: 'user', content: message },
+            { role: 'user', content: userContent },
           ],
           temperature: 0.6,
           max_tokens: 2500,
