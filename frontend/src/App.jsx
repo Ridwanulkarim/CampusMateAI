@@ -247,7 +247,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#dce5f2] p-2 sm:p-4 flex items-center justify-center font-sans relative overflow-hidden">
+    <div className="min-h-screen bg-[#dce5f2] p-2 sm:p-3 flex items-center justify-center font-sans relative overflow-x-hidden">
       <div className="absolute top-12 left-6 hidden lg:grid grid-cols-4 gap-2.5 opacity-30 pointer-events-none">
         {Array.from({ length: 24 }).map((_, i) => (
           <div key={i} className="w-1.5 h-1.5 rounded-full bg-[#6a90be]" />
@@ -258,7 +258,7 @@ export default function App() {
       <div className="absolute -top-28 -right-28 w-80 h-80 rounded-full bg-[#c7daf0] opacity-60 blur-2xl pointer-events-none" />
       <div className="absolute top-1/2 -right-16 w-60 h-60 rounded-full bg-[#d0e0f5] opacity-40 blur-xl pointer-events-none" />
 
-      <div className="w-full max-w-[1340px] bg-[#fbfcfe] rounded-[26px] shadow-[0_18px_50px_rgba(40,75,130,0.12)] border border-white p-3.5 sm:p-5 flex flex-col lg:flex-row gap-4 relative z-10">
+      <div className="w-full max-w-[98%] 2xl:max-w-[1680px] min-h-[95vh] bg-[#fbfcfe] rounded-[24px] shadow-[0_15px_45px_rgba(40,75,130,0.1)] border border-white p-3 sm:p-4 flex flex-col lg:flex-row gap-3.5 relative z-10 my-auto">
         <aside className="w-full lg:w-48 shrink-0 bg-white rounded-[20px] p-3 shadow-xs border border-slate-100 flex flex-col gap-3">
           <div className="flex flex-col items-center text-center pt-0.5">
             <div className="w-11 h-11 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#3c7bed] shadow-xs mb-1.5">
