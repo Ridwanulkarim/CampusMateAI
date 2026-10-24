@@ -18,7 +18,10 @@ import {
   Clock,
   FileText,
   Image,
-  Loader2
+  Loader2,
+  MoreVertical,
+  X,
+  ChevronDown
 } from 'lucide-react';
 
 const TABS = [
@@ -124,6 +127,7 @@ export default function App() {
   const [model, setModel] = useState('gemma4:e2b');
   const [language, setLanguage] = useState('auto');
   const [voiceGender, setVoiceGender] = useState('female');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
   const [provider, setProvider] = useState('');
@@ -137,6 +141,9 @@ export default function App() {
 
   const pdfInputRef = useRef(null);
   const imageInputRef = useRef(null);
+
+  const currentTab = TABS.find((t) => t.id === activeTab) || TABS[0];
+  const CurrentIcon = currentTab.icon;
 
   const handleFileUpload = async (e, type) => {
     const file = e.target.files?.[0];
@@ -318,35 +325,25 @@ export default function App() {
       <div className="absolute top-1/2 -right-16 w-60 h-60 rounded-full bg-[#d0e0f5] opacity-40 blur-xl pointer-events-none" />
 
       <div className="w-full max-w-[98%] 2xl:max-w-[1680px] min-h-[95vh] bg-[#fbfcfe] rounded-2xl sm:rounded-[24px] shadow-[0_15px_45px_rgba(40,75,130,0.1)] border border-white p-2.5 sm:p-4 flex flex-col lg:flex-row gap-3 relative z-10 my-auto">
-        <aside className="w-full lg:w-48 shrink-0 bg-white rounded-2xl lg:rounded-[20px] p-2.5 sm:p-3 shadow-xs border border-slate-100 flex flex-col lg:gap-3 gap-2">
-          <div className="flex items-center justify-between lg:flex-col lg:text-center pt-0.5">
-            <div className="flex items-center gap-2 lg:flex-col">
-              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#3c7bed] shadow-xs">
-                <svg className="w-5 h-5 sm:w-7 sm:h-7" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M24 6L28 16H39L30 22L33 32L24 26L15 32L18 22L9 16H20L24 6Z" fill="#3c7bed" opacity="0.15"/>
-                  <path d="M14 14C11 18 11 27 16 33C19 36 24 38 24 38C24 38 29 36 32 33C37 27 37 18 34 14" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
-                  <path d="M19 18V26C19 28.5 21 30.5 24 30.5C27 30.5 29 28.5 29 26V18" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
-                  <circle cx="24" cy="11" r="2.5" fill="#3c7bed"/>
-                </svg>
-              </div>
-              <div className="text-left lg:text-center">
-                <span className="font-extrabold text-xs tracking-tight text-slate-800 block">
-                  IIUC PORTAL
-                </span>
-                <span className="text-[9px] font-bold text-[#3c7bed] tracking-wide block">
-                  CampusMate AI
-                </span>
-              </div>
+        <aside className="hidden lg:flex w-48 shrink-0 bg-white rounded-[20px] p-3 shadow-xs border border-slate-100 flex-col gap-3">
+          <div className="flex flex-col items-center text-center pt-0.5">
+            <div className="w-11 h-11 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#3c7bed] shadow-xs mb-1.5">
+              <svg className="w-7 h-7" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 6L28 16H39L30 22L33 32L24 26L15 32L18 22L9 16H20L24 6Z" fill="#3c7bed" opacity="0.15"/>
+                <path d="M14 14C11 18 11 27 16 33C19 36 24 38 24 38C24 38 29 36 32 33C37 27 37 18 34 14" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M19 18V26C19 28.5 21 30.5 24 30.5C27 30.5 29 28.5 29 26V18" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                <circle cx="24" cy="11" r="2.5" fill="#3c7bed"/>
+              </svg>
             </div>
-
-            <div className="lg:hidden flex items-center gap-1.5">
-              <span className="bg-[#22c55e] text-white text-[9px] font-bold px-2 py-0.5 rounded-full shadow-2xs">
-                Active
-              </span>
-            </div>
+            <span className="font-extrabold text-xs tracking-tight text-slate-800">
+              IIUC PORTAL
+            </span>
+            <span className="text-[9px] font-bold text-[#3c7bed] tracking-wide">
+              CampusMate AI
+            </span>
           </div>
 
-          <nav className="flex flex-row lg:flex-col gap-1 overflow-x-auto pb-1 lg:pb-0 scrollbar-none no-scrollbar -mx-1 px-1">
+          <nav className="flex flex-col gap-1">
             {TABS.map((tab) => {
               const Icon = tab.icon;
               const isActive = activeTab === tab.id;
@@ -357,19 +354,93 @@ export default function App() {
                     setActiveTab(tab.id);
                     setError('');
                   }}
-                  className={`whitespace-nowrap shrink-0 flex items-center gap-2 px-3 py-1.5 lg:py-2 rounded-xl text-xs font-semibold transition-all text-left ${
+                  className={`flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left ${
                     isActive
                       ? 'bg-[#edf4fe] text-[#3c7bed] shadow-2xs font-bold'
                       : 'text-slate-500 hover:text-slate-800 hover:bg-slate-50'
                   }`}
                 >
                   <Icon className={`w-3.5 h-3.5 shrink-0 ${isActive ? 'text-[#3c7bed]' : 'text-slate-400'}`} />
-                  <span>{tab.label}</span>
+                  <span className="truncate">{tab.label}</span>
                 </button>
               );
             })}
           </nav>
         </aside>
+
+        <div className="lg:hidden flex items-center justify-between bg-white rounded-xl p-2.5 shadow-xs border border-slate-100 relative">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-full bg-blue-50 border border-blue-100 flex items-center justify-center text-[#3c7bed] shadow-xs">
+              <svg className="w-4 h-4" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 6L28 16H39L30 22L33 32L24 26L15 32L18 22L9 16H20L24 6Z" fill="#3c7bed" opacity="0.15"/>
+                <path d="M14 14C11 18 11 27 16 33C19 36 24 38 24 38C24 38 29 36 32 33C37 27 37 18 34 14" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                <path d="M19 18V26C19 28.5 21 30.5 24 30.5C27 30.5 29 28.5 29 26V18" stroke="#3c7bed" strokeWidth="2.5" strokeLinecap="round"/>
+                <circle cx="24" cy="11" r="2.5" fill="#3c7bed"/>
+              </svg>
+            </div>
+            <span className="font-extrabold text-xs tracking-tight text-slate-800">
+              IIUC PORTAL
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="flex items-center gap-1.5 bg-[#edf4fe] text-[#3c7bed] px-2.5 py-1 rounded-lg text-xs font-bold border border-blue-100 shadow-2xs"
+            >
+              <CurrentIcon className="w-3.5 h-3.5" />
+              <span className="max-w-[120px] truncate">{currentTab.label}</span>
+              <ChevronDown className={`w-3 h-3 transition-transform ${mobileMenuOpen ? 'rotate-180' : ''}`} />
+            </button>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="w-7 h-7 rounded-lg bg-slate-50 hover:bg-slate-100 border border-slate-200 flex items-center justify-center text-slate-700 shadow-2xs"
+            >
+              {mobileMenuOpen ? <X className="w-4 h-4 text-slate-600" /> : <MoreVertical className="w-4 h-4 text-slate-600" />}
+            </button>
+          </div>
+
+          {mobileMenuOpen && (
+            <>
+              <div 
+                onClick={() => setMobileMenuOpen(false)}
+                className="fixed inset-0 bg-slate-900/20 backdrop-blur-2xs z-40"
+              />
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl p-2 shadow-xl border border-slate-200 z-50 flex flex-col gap-1 animate-in fade-in slide-in-from-top-2 duration-150">
+                <div className="px-3 py-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-wider border-b border-slate-100 flex items-center justify-between">
+                  <span>Select Category</span>
+                  <span>5 Modules</span>
+                </div>
+                {TABS.map((tab) => {
+                  const Icon = tab.icon;
+                  const isActive = activeTab === tab.id;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => {
+                        setActiveTab(tab.id);
+                        setMobileMenuOpen(false);
+                        setError('');
+                      }}
+                      className={`flex items-center justify-between px-3 py-2 rounded-xl text-xs font-semibold transition-all text-left ${
+                        isActive
+                          ? 'bg-[#edf4fe] text-[#3c7bed] font-bold shadow-2xs'
+                          : 'text-slate-600 hover:bg-slate-50'
+                      }`}
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <Icon className={`w-4 h-4 ${isActive ? 'text-[#3c7bed]' : 'text-slate-400'}`} />
+                        <span>{tab.label}</span>
+                      </div>
+                      {isActive && <Check className="w-3.5 h-3.5 text-[#3c7bed]" />}
+                    </button>
+                  );
+                })}
+              </div>
+            </>
+          )}
+        </div>
 
         <main className="flex-1 flex flex-col gap-3 min-w-0">
           <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
